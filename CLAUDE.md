@@ -130,6 +130,25 @@ src/
 
 ---
 
+## ⚠️ MASTER.md OVERRIDE
+
+design-system/MASTER.md di-generate dengan kategori yang kurang tepat.
+Rules berikut dari MASTER.md DIABAIKAN dan diganti dengan rules di bawah:
+
+DIABAIKAN dari MASTER.md:
+- Color palette (gunakan design-tokens.md sebagai gantinya)
+- Typography/font (gunakan Clash Display + Satoshi dari design-tokens.md)
+- Section order (gunakan component-map.md sebagai gantinya)
+- Layout pattern "Masonry Grid" (kita pakai large-format cards)
+
+TETAP PAKAI dari MASTER.md:
+- Shadow depth system (--shadow-sm hingga --shadow-xl)
+- Anti-patterns checklist
+- Pre-delivery checklist
+- Component specs untuk transition timing (150-300ms)
+
+---
+
 ## 🔤 TYPOGRAPHY RULES
 
 ```
