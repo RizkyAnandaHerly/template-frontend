@@ -71,6 +71,8 @@ const SKILLS = [
   },
 ] as const;
 
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
+
 function SkillCard({
   icon: Icon,
   title,
@@ -90,59 +92,67 @@ function SkillCard({
       initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay, ease: "easeOut" }}
-      className={`group relative overflow-hidden rounded-2xl p-6 cursor-default ${colSpan}`}
+      className={`group relative rounded-2xl cursor-default overflow-hidden ${colSpan}`}
       style={{
-        background: "var(--color-surface-light)",
         border: "1px solid var(--color-border-light)",
       }}
     >
-      {/* BorderBeam hover accent — yellow for core, teal for supporting */}
-      <BorderBeam
-        size={60}
-        duration={8}
-        colorFrom={isCore ? "#FFDD00" : "#5E94B3"}
-        colorTo={isCore ? "#FFB800" : "#2D4C61"}
-        borderWidth={1.5}
-        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-      />
+      <SpotlightCard
+        className="w-full h-full p-6"
+        spotlightColor={isCore ? "rgba(255, 221, 0, 0.08)" : "rgba(94, 148, 179, 0.08)"}
+        spotlightSize={250}
+        style={{
+          background: "var(--color-surface-light)",
+        }}
+      >
+        {/* BorderBeam hover accent — yellow for core, teal for supporting */}
+        <BorderBeam
+          size={60}
+          duration={8}
+          colorFrom={isCore ? "#FFDD00" : "#5E94B3"}
+          colorTo={isCore ? "#FFB800" : "#2D4C61"}
+          borderWidth={1.5}
+          className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+        />
 
-      {/* Tag badge */}
-      <div className="flex items-center justify-between mb-4">
-        <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center"
-          style={{ background: isCore ? "rgba(255,221,0,0.12)" : "rgba(94,148,179,0.12)" }}
-        >
-          <Icon
-            className="w-5 h-5"
-            style={{ color: isCore ? "var(--color-accent-primary)" : "var(--color-accent-teal)" }}
-          />
+        {/* Tag badge */}
+        <div className="flex items-center justify-between mb-4 relative z-20">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center"
+            style={{ background: isCore ? "rgba(255,221,0,0.12)" : "rgba(94,148,179,0.12)" }}
+          >
+            <Icon
+              className="w-5 h-5"
+              style={{ color: isCore ? "var(--color-accent-primary)" : "var(--color-accent-teal)" }}
+            />
+          </div>
+          <span
+            className="font-satoshi font-medium text-[10px] uppercase tracking-[0.08em] px-2 py-1 rounded-full animate-pulse"
+            style={{
+              background: isCore ? "rgba(255,221,0,0.08)" : "rgba(94,148,179,0.08)",
+              color: isCore ? "#9A8200" : "var(--color-accent-deep)",
+            }}
+          >
+            {tag}
+          </span>
         </div>
-        <span
-          className="font-satoshi font-medium text-[10px] uppercase tracking-[0.08em] px-2 py-1 rounded-full"
-          style={{
-            background: isCore ? "rgba(255,221,0,0.08)" : "rgba(94,148,179,0.08)",
-            color: isCore ? "#9A8200" : "var(--color-accent-deep)",
-          }}
+
+        {/* Title */}
+        <h3
+          className="font-satoshi font-bold text-base mb-2 leading-snug relative z-20"
+          style={{ color: "var(--color-text-dark)" }}
         >
-          {tag}
-        </span>
-      </div>
+          {title}
+        </h3>
 
-      {/* Title */}
-      <h3
-        className="font-satoshi font-bold text-base mb-2 leading-snug"
-        style={{ color: "var(--color-text-dark)" }}
-      >
-        {title}
-      </h3>
-
-      {/* Description */}
-      <p
-        className="font-satoshi font-normal text-sm leading-relaxed"
-        style={{ color: "var(--color-text-dark-muted)" }}
-      >
-        {description}
-      </p>
+        {/* Description */}
+        <p
+          className="font-satoshi font-normal text-sm leading-relaxed relative z-20"
+          style={{ color: "var(--color-text-dark-muted)" }}
+        >
+          {description}
+        </p>
+      </SpotlightCard>
     </motion.div>
   );
 }
