@@ -76,7 +76,7 @@ export default function AboutSection() {
         {/* ── Hook + Robot Row ── */}
         <div
           ref={introRef}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20 lg:mb-28"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-10 lg:mb-16"
         >
           {/* Left — Hook text + Intro */}
           <motion.div
@@ -126,7 +126,7 @@ export default function AboutSection() {
             {/* Intro */}
             <motion.p
               variants={prefersReducedMotion ? {} : fadeUp}
-              className="font-satoshi font-normal text-lg"
+              className="font-satoshi font-medium text-[1.25rem] mb-4"
               style={{ color: "var(--color-text-dark-muted)" }}
             >
               hi, i&apos;m rizky
@@ -154,6 +154,10 @@ export default function AboutSection() {
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.95 }}
             animate={introInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="w-full flex items-center justify-center lg:min-h-[400px] rounded-2xl overflow-hidden"
+            style={{
+              background: "radial-gradient(circle at center, rgba(94,148,179,0.12) 0%, transparent 70%)",
+            }}
           >
             <RobotInteractive />
           </motion.div>
@@ -203,13 +207,20 @@ export default function AboutSection() {
             variants={prefersReducedMotion ? {} : staggerContainer}
             initial="hidden"
             animate={workingInView ? "visible" : "hidden"}
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-4"
           >
             <motion.div
               variants={prefersReducedMotion ? {} : fadeUp}
               className="h-px w-16 mb-2"
               style={{ background: "var(--color-border-light)" }}
             />
+            <motion.p
+              variants={prefersReducedMotion ? {} : fadeUp}
+              className="font-satoshi font-medium uppercase tracking-[0.08em] text-xs lg:text-sm"
+              style={{ color: "var(--color-text-dark-muted)" }}
+            >
+              Working with me
+            </motion.p>
             <motion.p
               variants={prefersReducedMotion ? {} : fadeUp}
               className="font-satoshi font-normal leading-[1.7]"
