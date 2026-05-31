@@ -1,9 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import SkillsGrid from "./SkillsGrid";
+import TerminalCard from "./TerminalCard";
 
 /* ===================================================================
    ABOUT SECTION — Section 2 (LIGHT #F0F4F8)
@@ -12,28 +12,6 @@ import SkillsGrid from "./SkillsGrid";
    - Skills grid full-width di bawah
    Content: content.md → SECTION 2 + 2B
    =================================================================== */
-
-/* Dynamic import robot to avoid SSR issues with Spline/Three.js */
-const RobotInteractive = dynamic(() => import("./RobotInteractive"), {
-  ssr: false,
-  loading: () => (
-    <div
-      className="w-full aspect-square max-w-sm mx-auto rounded-2xl flex items-center justify-center"
-      style={{ background: "var(--color-surface-light)", border: "1px dashed var(--color-border-light)" }}
-    >
-      <div className="flex flex-col items-center gap-3">
-        <div
-          className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: "var(--color-accent-teal)", borderTopColor: "transparent" }}
-        />
-        <p className="font-satoshi font-medium text-xs uppercase tracking-widest"
-          style={{ color: "var(--color-text-dark-muted)" }}>
-          Loading...
-        </p>
-      </div>
-    </div>
-  ),
-});
 
 /* ---- Animation variants from design-tokens.md ---- */
 const fadeUp = {
@@ -149,17 +127,14 @@ export default function AboutSection() {
             </motion.p>
           </motion.div>
 
-          {/* Right — 3D Robot */}
+          {/* Right — Animated Terminal */}
           <motion.div
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.95 }}
             animate={introInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="w-full flex items-center justify-center lg:min-h-[400px] rounded-2xl overflow-hidden"
-            style={{
-              background: "radial-gradient(circle at center, rgba(94,148,179,0.12) 0%, transparent 70%)",
-            }}
+            className="w-full flex items-center justify-center lg:min-h-[400px] rounded-2xl"
           >
-            <RobotInteractive />
+            <TerminalCard />
           </motion.div>
         </div>
 

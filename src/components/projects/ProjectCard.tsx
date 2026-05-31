@@ -1,16 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useInView } from "motion/react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 /* ===================================================================
    PROJECT CARD — Large-format Featured Project Card
    component-map.md: Section 4, Sub-component 2
    Aesthetics: Full-width, height 70-80vh, parallax image entrance,
-   gradient contrast overlay, prominent Clash number, custom hover.
+   scroll-triggered text slide-ins, custom outline.
    =================================================================== */
 
 interface ProjectCardProps {
@@ -36,9 +36,14 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const prefersReducedMotion = useReducedMotion();
   const [imageError, setImageError] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <div className="relative w-full h-[65vh] md:h-[70vh] lg:h-[80vh] min-h-[480px] lg:min-h-[580px] rounded-3xl overflow-hidden group border border-[var(--color-border-light)] shadow-[var(--shadow-xl)] bg-[var(--color-bg-light-alt)]">
+    <div
+      ref={ref}
+      className="relative w-full h-[65vh] md:h-[70vh] lg:h-[80vh] min-h-[480px] lg:min-h-[580px] rounded-3xl overflow-hidden group border border-[var(--color-border-light)] shadow-[var(--shadow-xl)] bg-[var(--color-bg-light-alt)]"
+    >
       
       {/* ── Background Image / Fallback Gradient ── */}
       {!imageError ? (
@@ -71,16 +76,26 @@ export default function ProjectCard({
           <span className="font-satoshi font-bold text-sm tracking-[0.2em] text-white/40 uppercase">
             Project
           </span>
-          <span className="font-clash font-bold text-7xl lg:text-9xl text-[var(--color-accent-primary)] leading-none select-none transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-translate-y-2">
+          <motion.span
+            initial={prefersReducedMotion ? { x: 0, opacity: 1 } : { x: 60, opacity: 0 }}
+            animate={isInView ? { x: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="font-clash font-bold text-7xl lg:text-9xl text-[var(--color-accent-primary)] leading-none select-none transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-translate-y-2"
+          >
             {number}
-          </span>
+          </motion.span>
         </div>
 
         {/* Bottom Section: Info + Badges + Action */}
         <div className="flex flex-col items-start gap-4 lg:gap-6">
           
           {/* Tags / Badges */}
-          <div className="flex flex-wrap gap-2">
+          <motion.div
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="flex flex-wrap gap-2"
+          >
             {tags.map((tag) => (
               <span
                 key={tag}
@@ -89,32 +104,53 @@ export default function ProjectCard({
                 {tag}
               </span>
             ))}
-          </div>
+          </motion.div>
 
           {/* Title & Subtitle */}
           <div className="flex flex-col gap-2 max-w-2xl">
-            <h3 className="font-satoshi font-bold text-3xl lg:text-5xl leading-tight tracking-[-0.01em]">
+            <motion.h3
+              initial={prefersReducedMotion ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+              animate={isInView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="font-satoshi font-bold text-3xl lg:text-5xl leading-tight tracking-[-0.01em]"
+            >
               {title}
-            </h3>
-            <p className="font-satoshi font-normal text-sm lg:text-lg text-white/70 leading-relaxed">
+            </motion.h3>
+            <motion.p
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="font-satoshi font-normal text-sm lg:text-lg text-white/70 leading-relaxed"
+            >
               {subtitle}
-            </p>
+            </motion.p>
           </div>
 
           {/* Role & Team Metadata */}
-          <div className="font-satoshi font-medium text-xs lg:text-sm uppercase tracking-[0.05em] text-white/40 flex items-center gap-2">
+          <motion.div
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="font-satoshi font-medium text-xs lg:text-sm uppercase tracking-[0.05em] text-white/40 flex items-center gap-2"
+          >
             <span>Role:</span>
             <span className="text-white/80">{role}</span>
-          </div>
+          </motion.div>
 
           {/* CTA Link Button */}
-          <Link
-            href={ctaLink}
-            className="inline-flex items-center gap-2 font-satoshi font-bold text-sm lg:text-base uppercase tracking-[0.05em] px-6 py-3.5 rounded-xl bg-[var(--color-accent-primary)] text-black transition-all duration-300 ease-out hover:bg-white hover:scale-105 active:scale-95 cursor-pointer shadow-md select-none group-hover:shadow-[0_0_20px_rgba(255,221,0,0.2)]"
+          <motion.div
+            initial={prefersReducedMotion ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+            animate={isInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.45 }}
           >
-            <span>VIEW PROJECT</span>
-            <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+            <Link
+              href={ctaLink}
+              className="inline-flex items-center gap-2 font-satoshi font-bold text-sm lg:text-base uppercase tracking-[0.05em] px-6 py-3.5 rounded-xl bg-[var(--color-accent-primary)] text-black transition-all duration-300 ease-out hover:bg-white hover:scale-105 active:scale-95 cursor-pointer shadow-md select-none group-hover:shadow-[0_0_20px_rgba(255,221,0,0.2)]"
+            >
+              <span>VIEW PROJECT</span>
+              <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </motion.div>
 
         </div>
 

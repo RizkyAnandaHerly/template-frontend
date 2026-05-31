@@ -37,7 +37,7 @@ export default function HeroSection() {
         initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.6 }}
-        className="pt-28 md:pt-32 border-b border-[var(--color-border-dark)]"
+        className="pt-4 md:pt-8 border-b border-[var(--color-border-dark)]"
       >
         <SkillTicker />
       </motion.div>

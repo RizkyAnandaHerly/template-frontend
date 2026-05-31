@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 /* ===== CLASH DISPLAY — Hero headline + project numbers + footer CTA only ===== */
 const clashDisplay = localFont({
@@ -71,7 +72,11 @@ export default function RootLayout({
       className={`${clashDisplay.variable} ${satoshi.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <script src="https://cdn.lordicon.com/lordicon.js" async></script>
+      </head>
       <body className="min-h-full flex flex-col">
+        <CustomCursor />
         {children}
       </body>
     </html>

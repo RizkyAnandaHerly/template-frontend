@@ -57,8 +57,8 @@ export default function Footer() {
             className="lg:col-span-7 flex flex-col gap-6"
           >
             <h2
-              className="font-clash font-bold leading-[1.1] tracking-[-0.02em] text-[var(--color-text-primary)]"
-              style={{ fontSize: "clamp(2.3rem, 6vw, 3.8rem)" }}
+              className="font-clash font-bold leading-[1.1] tracking-[-0.02em] text-white uppercase"
+              style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
             >
               Let&apos;s build something<br />that actually works.
             </h2>
@@ -67,24 +67,6 @@ export default function Footer() {
               Open to internships, collaborations, and interesting problems.
             </p>
 
-            {/* Typewriter quote with blinking terminal cursor */}
-            <div className="font-mono text-[11px] md:text-[13px] text-[var(--color-accent-primary)]/80 flex items-center gap-2 mt-2 py-1.5 px-3 bg-[var(--color-surface-dark)] border border-[var(--color-border-dark)] rounded-xl w-fit max-w-full">
-              <span className="text-[var(--color-text-muted)] opacity-50 shrink-0">&gt;_</span>
-              <TypeAnimation
-                sequence={[
-                  "Beautiful code is good. Code that runs in production is better.",
-                  4500,
-                  "Logic will get you from A to B. Architecture will get you to scale.",
-                  4500,
-                  "A database schema is a reflection of how you view the real world — structured.",
-                  4500,
-                ]}
-                wrapper="span"
-                speed={50}
-                repeat={Infinity}
-                className="inline-block"
-              />
-            </div>
 
             {/* Premium Interactive Copy Button */}
             <div className="relative mt-2 self-start">
@@ -157,6 +139,22 @@ export default function Footer() {
 
         </div>
 
+        {/* Fix 2 — Typewriter Quote */}
+        <div className="mt-12 border-t border-white/10 pt-8">
+          <TypeAnimation
+            sequence={[
+              "THE BEST CODE IS THE ONE THAT SOLVES THE REAL PROBLEM.",
+              3000,
+              "",
+              1000,
+            ]}
+            wrapper="p"
+            speed={60}
+            className="font-satoshi text-xs md:text-sm text-white/30 uppercase tracking-widest"
+            repeat={Infinity}
+          />
+        </div>
+
         {/* ── Footer Copyrights & Credentials Credits ── */}
         <div className="mt-16 lg:mt-24 pt-8 border-t border-[var(--color-border-dark)] flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="flex flex-col gap-1">
@@ -171,6 +169,23 @@ export default function Footer() {
           <p className="font-satoshi font-normal text-xs lg:text-sm text-[var(--color-text-muted)] opacity-70">
             &copy; 2026. All rights reserved.
           </p>
+        </div>
+
+        {/* Fix 3 — Draggable SYSTEMS Text */}
+        <div className="relative overflow-hidden h-32 mt-8">
+          <motion.div
+            drag
+            dragConstraints={{ left: -300, right: 300, top: -50, bottom: 50 }}
+            dragElastic={0.1}
+            whileDrag={{ scale: 1.05 }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                       font-clash font-bold text-[15vw] text-white/[0.05]
+                       select-none cursor-grab active:cursor-grabbing whitespace-nowrap
+                       hover:text-white/[0.08] transition-colors duration-300"
+            style={{ userSelect: "none" }}
+          >
+            SYSTEMS
+          </motion.div>
         </div>
 
       </div>

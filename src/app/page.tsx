@@ -18,27 +18,39 @@ export default function Home() {
       <DynamicIsland />
 
       {/* Section 1 — Hero (DARK) */}
-      <HeroSection />
+      <section data-theme="dark" id="hero">
+        <HeroSection />
+      </section>
 
       {/* Section 2 — About (LIGHT) */}
-      <AboutSection />
+      <section data-theme="light" id="about">
+        <AboutSection />
+      </section>
 
       {/* Section 3 — Approach (DARK) */}
-      <ApproachSection />
+      <section data-theme="dark" id="approach">
+        <ApproachSection />
+      </section>
 
       {/* Section 4 — Featured Projects (LIGHT) */}
-      <FeaturedSection />
+      <section data-theme="light" id="projects">
+        <FeaturedSection />
+      </section>
 
       {/* Section 5 — Experience (DARK) */}
-      <ExperienceTimeline />
+      <section data-theme="dark" id="experience">
+        <ExperienceTimeline />
+      </section>
 
       {/* Section 6 — Testimonials (LIGHT) */}
-      {/* Section 6 — Testimonials (LIGHT) */}
-      <TestimonialsSection />
+      <section data-theme="light" id="testimonials">
+        <TestimonialsSection />
+      </section>
 
       {/* Section 7 — Footer (DARK) */}
-      {/* Section 7 — Footer (DARK) */}
-      <Footer />
+      <section data-theme="dark" id="footer">
+        <Footer />
+      </section>
     </main>
   );
 }

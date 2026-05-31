@@ -102,54 +102,67 @@ export default function HeroHeadline() {
   };
 
   return (
-    <div className="flex flex-col gap-8 md:gap-10">
-      {/* Main headline — Clash Display Bold — Stacked with Gap 6 */}
-      <motion.h1
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="font-clash font-bold leading-[1.05] tracking-[-0.02em] text-[var(--color-text-primary)] flex flex-col gap-6"
-        style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
+    <div className="flex flex-col gap-6">
+      {/* 3-layered T-shaped Stacked Typography */}
+      <div className="flex flex-col gap-2">
+        {/* Layer 1 (top) */}
+        <motion.span
+          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="font-satoshi font-normal text-base md:text-lg text-white/50 uppercase tracking-[0.25em] block"
+        >
+          IM YOUR
+        </motion.span>
+
+        {/* Layer 2 (middle) */}
+        <motion.h1
+          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="font-clash font-bold text-white uppercase tracking-tight leading-[0.95]"
+          style={{ fontSize: "clamp(3.5rem, 9vw, 8rem)" }}
+        >
+          T-SHAPED
+        </motion.h1>
+
+        {/* Layer 3 (bottom) */}
+        <motion.h1
+          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="font-clash font-bold text-[#FFDD00] uppercase tracking-tight leading-[0.95]"
+          style={{ fontSize: "clamp(3.5rem, 9vw, 8rem)" }}
+        >
+          TECHNICAL BUILDER
+        </motion.h1>
+      </div>
+
+      {/* Subtitle (Below the stacked text) */}
+      <motion.p
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+        className="font-satoshi font-normal text-base md:text-lg text-white/60 mt-6 max-w-xl leading-relaxed"
       >
-        <span className="block">
-          {["Designing", "systems", "that", "solve"].map((word, i) => (
-            <motion.span
-              key={`line1-${i}`}
-              variants={wordVariants}
-              className="inline-block mr-[0.25em]"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </span>
-        <span className="block">
-          {["real", "operational", "problems."].map((word, i) => (
-            <motion.span
-              key={`line2-${i}`}
-              variants={wordVariants}
-              className="inline-block mr-[0.25em]"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </span>
-      </motion.h1>
+        Designing systems that solve real operational problems.
+      </motion.p>
 
       {/* Sub-tagline — Satoshi Medium, muted, decrypted animation */}
       <motion.p
         initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-        className="font-satoshi font-medium text-sm md:text-base tracking-[0.05em] text-[var(--color-text-muted)] uppercase"
+        transition={{ delay: 1.0, duration: 0.5 }}
+        className="font-satoshi font-medium text-sm md:text-base tracking-[0.05em] text-[var(--color-text-muted)] uppercase mt-2"
       >
-        <DecryptedText text={SUBTAGLINE} delay={1400} />
+        <DecryptedText text={SUBTAGLINE} delay={1200} />
       </motion.p>
 
       {/* Descriptor — Satoshi Regular, subtle */}
       <motion.p
         initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.5 }}
+        transition={{ delay: 1.3, duration: 0.5 }}
         className="font-satoshi font-normal text-sm text-[var(--color-text-subtle)]"
       >
         {DESCRIPTOR}
