@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Copy, Check, ArrowUpRight } from "lucide-react";
+import { TypeAnimation } from "react-type-animation";
 
 /* ===================================================================
    FOOTER / CONTACT SECTION — Section 8 (DARK #09090A)
@@ -56,15 +57,34 @@ export default function Footer() {
             className="lg:col-span-7 flex flex-col gap-6"
           >
             <h2
-              className="font-satoshi font-bold leading-none tracking-[-0.02em] text-[var(--color-text-primary)]"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)" }}
+              className="font-clash font-bold leading-[1.1] tracking-[-0.02em] text-[var(--color-text-primary)]"
+              style={{ fontSize: "clamp(2.3rem, 6vw, 3.8rem)" }}
             >
-              Let's connect.
+              Let&apos;s build something<br />that actually works.
             </h2>
             
             <p className="font-satoshi font-normal text-sm lg:text-base text-[var(--color-text-muted)] leading-[1.7] max-w-xl">
-              Whether you're looking for a structured Project Manager, a detail-oriented Backend Developer, or just want to talk about database architectures — my inbox is open.
+              Open to internships, collaborations, and interesting problems.
             </p>
+
+            {/* Typewriter quote with blinking terminal cursor */}
+            <div className="font-mono text-[11px] md:text-[13px] text-[var(--color-accent-primary)]/80 flex items-center gap-2 mt-2 py-1.5 px-3 bg-[var(--color-surface-dark)] border border-[var(--color-border-dark)] rounded-xl w-fit max-w-full">
+              <span className="text-[var(--color-text-muted)] opacity-50 shrink-0">&gt;_</span>
+              <TypeAnimation
+                sequence={[
+                  "Beautiful code is good. Code that runs in production is better.",
+                  4500,
+                  "Logic will get you from A to B. Architecture will get you to scale.",
+                  4500,
+                  "A database schema is a reflection of how you view the real world — structured.",
+                  4500,
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+                className="inline-block"
+              />
+            </div>
 
             {/* Premium Interactive Copy Button */}
             <div className="relative mt-2 self-start">

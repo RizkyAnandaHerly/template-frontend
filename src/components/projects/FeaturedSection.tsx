@@ -22,7 +22,7 @@ export default function FeaturedSection() {
       role: "Project Manager (Hustler)",
       tags: ["HACKATHON", "1ST PLACE", "MOBILE", "HEALTH TECH", "2026"],
       ctaLink: "/projects/obatin",
-      imageSrc: "/images/obatin/hero.jpg",
+      imageSrc: "/images/obatin/hero.svg",
       fallbackGradient: "from-blue-950/80 via-purple-950/85 to-[#09090a]/95",
     },
     {
@@ -32,7 +32,7 @@ export default function FeaturedSection() {
       role: "Backend Developer",
       tags: ["WEB", "B2B", "BACKEND", "IN PROGRESS"],
       ctaLink: "/projects/warehouse",
-      imageSrc: "/images/warehouse/hero.jpg",
+      imageSrc: "/images/warehouse/hero.svg",
       fallbackGradient: "from-slate-950/80 via-[#2d4c61]/70 to-[#09090a]/95",
     },
   ];

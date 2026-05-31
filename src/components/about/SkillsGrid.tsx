@@ -139,19 +139,23 @@ function SkillCard({
 
         {/* Title */}
         <h3
-          className="font-satoshi font-bold text-base mb-2 leading-snug relative z-20"
+          className="font-satoshi font-bold text-base mb-1 leading-snug relative z-20 group-hover:text-[var(--color-accent-teal)] transition-colors duration-300"
           style={{ color: "var(--color-text-dark)" }}
         >
           {title}
         </h3>
 
-        {/* Description */}
-        <p
-          className="font-satoshi font-normal text-sm leading-relaxed relative z-20"
-          style={{ color: "var(--color-text-dark-muted)" }}
-        >
-          {description}
-        </p>
+        {/* Description container with smooth height reveal and opacity delay */}
+        <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-in-out relative z-20">
+          <div className="overflow-hidden">
+            <p
+              className="font-satoshi font-normal text-[13px] leading-relaxed pt-2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-75 transform translate-y-2 group-hover:translate-y-0"
+              style={{ color: "var(--color-text-dark-muted)" }}
+            >
+              {description}
+            </p>
+          </div>
+        </div>
       </SpotlightCard>
     </motion.div>
   );

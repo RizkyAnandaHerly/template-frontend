@@ -6,10 +6,14 @@ import FeaturedSection from "@/components/projects/FeaturedSection";
 import ExperienceTimeline from "@/components/experience/ExperienceTimeline";
 import TestimonialsSection from "@/components/testimonials/TestimonialsSection";
 import Footer from "@/components/footer/Footer";
+import MascotWalk from "@/components/ui/MascotWalk";
 
 export default function Home() {
   return (
     <main>
+      {/* Floating interactive mascot */}
+      <MascotWalk />
+
       {/* Floating navbar — fixed position, z-[9999] */}
       <DynamicIsland />
 

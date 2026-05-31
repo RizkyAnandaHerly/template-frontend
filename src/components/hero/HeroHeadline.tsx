@@ -102,24 +102,37 @@ export default function HeroHeadline() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Main headline — Clash Display Bold */}
+    <div className="flex flex-col gap-8 md:gap-10">
+      {/* Main headline — Clash Display Bold — Stacked with Gap 6 */}
       <motion.h1
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="font-clash font-bold leading-[1.05] tracking-[-0.02em] text-[var(--color-text-primary)]"
+        className="font-clash font-bold leading-[1.05] tracking-[-0.02em] text-[var(--color-text-primary)] flex flex-col gap-6"
         style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
       >
-        {HEADLINE_WORDS.map((word, i) => (
-          <motion.span
-            key={i}
-            variants={wordVariants}
-            className="inline-block mr-[0.25em]"
-          >
-            {word}
-          </motion.span>
-        ))}
+        <span className="block">
+          {["Designing", "systems", "that", "solve"].map((word, i) => (
+            <motion.span
+              key={`line1-${i}`}
+              variants={wordVariants}
+              className="inline-block mr-[0.25em]"
+            >
+              {word}
+            </motion.span>
+          ))}
+        </span>
+        <span className="block">
+          {["real", "operational", "problems."].map((word, i) => (
+            <motion.span
+              key={`line2-${i}`}
+              variants={wordVariants}
+              className="inline-block mr-[0.25em]"
+            >
+              {word}
+            </motion.span>
+          ))}
+        </span>
       </motion.h1>
 
       {/* Sub-tagline — Satoshi Medium, muted, decrypted animation */}
