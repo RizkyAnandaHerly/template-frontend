@@ -66,22 +66,13 @@ export default function AboutSection() {
             {/* Hook */}
             <motion.div variants={prefersReducedMotion ? {} : fadeUp}>
               <p
-                className="font-satoshi font-normal leading-snug mb-1"
-                style={{
-                  fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
-                  color: "var(--color-text-dark-muted)",
-                }}
-              >
-                You might think this is just
-              </p>
-              <p
-                className="font-satoshi font-bold leading-snug"
+                className="font-clash font-bold leading-snug"
                 style={{
                   fontSize: "clamp(1.1rem, 2.5vw, 1.35rem)",
                   color: "var(--color-text-dark)",
                 }}
               >
-                &ldquo;another developer, another portfolio&rdquo;
+                most portfolios tell you what someone built.
               </p>
             </motion.div>
 
@@ -96,9 +87,7 @@ export default function AboutSection() {
                 letterSpacing: "-0.01em",
               }}
             >
-              but you&apos;re{" "}
-              <span style={{ color: "var(--color-accent-teal)" }}>[completely]</span>{" "}
-              wrong.
+              this one tells you how i think.
             </motion.p>
 
             {/* Intro */}

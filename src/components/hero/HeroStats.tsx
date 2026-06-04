@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { NumberTicker } from "@/components/ui/number-ticker";
 
@@ -17,6 +18,11 @@ const STATS = [
 
 export default function HeroStats() {
   const prefersReducedMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <motion.div
@@ -39,11 +45,15 @@ export default function HeroStats() {
               className="font-clash font-bold text-[var(--color-text-primary)] tabular-nums"
               style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", lineHeight: 1 }}
             >
-              <NumberTicker
-                value={stat.value}
-                delay={2.2 + i * 0.1}
-                className="text-[var(--color-text-primary)] tracking-tight"
-              />
+              {mounted ? (
+                <NumberTicker
+                  value={stat.value}
+                  delay={2.2 + i * 0.1}
+                  className="text-[var(--color-text-primary)] tracking-tight"
+                />
+              ) : (
+                <span>{stat.value}</span>
+              )}
             </span>
             {stat.suffix && (
               <span

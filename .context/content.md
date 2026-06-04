@@ -71,13 +71,12 @@ Stat 4: 2        label: "Products Built"
 
 ### Hook Text (sebelum robot / di samping robot)
 ```
-You might think this is just
-"another developer, another portfolio"
+most portfolios tell you what someone built.
 ```
 
 ### Punchline
 ```
-but you're [completely] wrong.
+this one tells you how i think.
 ```
 
 ### Intro (Satoshi Regular)
