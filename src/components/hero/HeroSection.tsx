@@ -20,7 +20,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="section-dark relative min-h-screen flex flex-col overflow-hidden"
+      className="section-dark relative min-h-screen flex flex-col overflow-hidden !pt-4 md:!pt-6"
     >
       {/* ---- Top edge glow — decorative ---- */}
       <div

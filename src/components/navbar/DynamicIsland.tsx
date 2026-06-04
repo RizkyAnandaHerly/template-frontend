@@ -198,10 +198,7 @@ export default function DynamicIsland() {
             )}
           >
             {/* Header */}
-            <div className="flex shrink-0 items-center justify-between px-6 pb-3 pt-5">
-              <span className="text-[11px] font-semibold tracking-[0.08em] text-[var(--color-text-muted)] uppercase">
-                Navigate
-              </span>
+            <div className="flex shrink-0 items-center justify-end px-6 pb-3 pt-5">
               <button
                 onClick={(e) => {
                   e.stopPropagation();

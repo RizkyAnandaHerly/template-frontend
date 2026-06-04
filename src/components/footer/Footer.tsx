@@ -16,7 +16,7 @@ import { TypeAnimation } from "react-type-animation";
 
 const SOCIAL_LINKS = [
   { name: "LinkedIn", href: "https://linkedin.com/in/rizkyanandaherly" },
-  { name: "GitHub", href: "https://github.com/rizkyanandaherly" },
+  { name: "GitHub", href: "https://github.com/RizkyAnandaHerly" },
   { name: "Instagram", href: "https://instagram.com/rizkyanandaherly" },
 ];
 
