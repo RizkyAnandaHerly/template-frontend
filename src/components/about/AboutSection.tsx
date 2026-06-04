@@ -3,13 +3,15 @@
 import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import SkillsGrid from "./SkillsGrid";
-import TerminalCard from "./TerminalCard";
 
 /* ===================================================================
    ABOUT SECTION — Section 2 (LIGHT #F0F4F8)
-   component-map.md layout:
-   - Robot kiri/tengah, philosophy text kanan (desktop)
-   - Skills grid full-width di bawah
+   Redesign v2:
+   - Hook + Punchline + Intro (left)
+   - Working With Me (right)
+   - Philosophy REMOVED (condensed → hero descriptor)
+   - TerminalCard REMOVED (moved → footer easter egg)
+   - Skills grid below
    Content: content.md → SECTION 2 + 2B
    =================================================================== */
 
@@ -28,11 +30,9 @@ export default function AboutSection() {
   const prefersReducedMotion = useReducedMotion();
 
   const introRef = useRef<HTMLDivElement>(null);
-  const philosophyRef = useRef<HTMLDivElement>(null);
   const workingRef = useRef<HTMLDivElement>(null);
 
   const introInView = useInView(introRef, { once: true, margin: "-80px" });
-  const philosophyInView = useInView(philosophyRef, { once: true, margin: "-80px" });
   const workingInView = useInView(workingRef, { once: true, margin: "-80px" });
 
   return (
@@ -51,10 +51,10 @@ export default function AboutSection() {
           01 · ABOUT ME
         </motion.p>
 
-        {/* ── Hook + Robot Row ── */}
+        {/* ── Hook + Working With Me ── */}
         <div
           ref={introRef}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-10 lg:mb-16"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start mb-20 lg:mb-28"
         >
           {/* Left — Hook text + Intro */}
           <motion.div
@@ -104,7 +104,7 @@ export default function AboutSection() {
             {/* Intro */}
             <motion.p
               variants={prefersReducedMotion ? {} : fadeUp}
-              className="font-satoshi font-medium text-[1.25rem] mb-4"
+              className="font-satoshi font-medium text-[1.25rem]"
               style={{ color: "var(--color-text-dark-muted)" }}
             >
               hi, i&apos;m rizky
@@ -127,62 +127,13 @@ export default function AboutSection() {
             </motion.p>
           </motion.div>
 
-          {/* Right — Animated Terminal */}
-          <motion.div
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.95 }}
-            animate={introInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="w-full flex items-center justify-center lg:min-h-[400px] rounded-2xl"
-          >
-            <TerminalCard />
-          </motion.div>
-        </div>
-
-        {/* ── Philosophy Text ── */}
-        <div
-          ref={philosophyRef}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-20 lg:mb-28"
-        >
-          <motion.div
-            variants={prefersReducedMotion ? {} : staggerContainer}
-            initial="hidden"
-            animate={philosophyInView ? "visible" : "hidden"}
-            className="flex flex-col gap-6"
-          >
-            <motion.p
-              variants={prefersReducedMotion ? {} : fadeUp}
-              className="font-satoshi font-normal leading-[1.7]"
-              style={{
-                fontSize: "clamp(1rem, 1.8vw, 1.125rem)",
-                color: "var(--color-text-dark)",
-              }}
-            >
-              I&apos;m obsessive about understanding how systems work — from the database
-              schema all the way up to the user experience. That mindset is what led me
-              to work across backend engineering and product management simultaneously.
-            </motion.p>
-
-            <motion.p
-              variants={prefersReducedMotion ? {} : fadeUp}
-              className="font-satoshi font-normal leading-[1.7]"
-              style={{
-                fontSize: "clamp(1rem, 1.8vw, 1.125rem)",
-                color: "var(--color-text-dark)",
-              }}
-            >
-              I don&apos;t just write code or manage timelines in isolation. I connect the
-              technical dots with the business context, because the best systems are
-              built by people who understand both sides of the equation.
-            </motion.p>
-          </motion.div>
-
-          {/* Working With Me */}
+          {/* Right — Working With Me */}
           <motion.div
             ref={workingRef}
             variants={prefersReducedMotion ? {} : staggerContainer}
             initial="hidden"
             animate={workingInView ? "visible" : "hidden"}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 lg:pt-4"
           >
             <motion.div
               variants={prefersReducedMotion ? {} : fadeUp}

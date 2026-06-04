@@ -26,10 +26,16 @@ Cross-functional Collaboration · MySQL · Next.js · C# · Java · Technical Do
 Requirement Analysis · Stakeholder Coordination · Problem Solving ·
 ```
 
-### Main Headline (Clash Display Bold)
+### Stacked Headline (3-layer, Clash Display Bold)
 ```
-Designing systems that solve
-real operational problems.
+Layer 1 (small, muted) : IM YOUR
+Layer 2 (large, white)  : T-SHAPED
+Layer 3 (large, yellow) : TECHNICAL BUILDER
+```
+
+### Subtitle (Satoshi Regular, below stacked headline)
+```
+Designing systems that solve real operational problems.
 ```
 
 ### Sub-tagline (ReactBits DecryptedText atau TypewriterEffect)
@@ -37,8 +43,12 @@ real operational problems.
 [ SYSTEMS THINKER · BACKEND DEVELOPER · PRODUCT MANAGER ]
 ```
 
-### Descriptor Text (Satoshi Regular, muted)
+### Descriptor Text (Satoshi Regular, muted — condensed philosophy)
 ```
+Obsessive about understanding how systems work — from the database
+schema to the user experience. That mindset drives me across backend
+engineering and product management simultaneously.
+
 Information Systems · Telkom University · Bandung, Indonesia
 ```
 
@@ -75,8 +85,12 @@ but you're [completely] wrong.
 hi, i'm rizky
 ```
 
-### Philosophy Text
+### Philosophy Text — DEPRECATED (moved to hero descriptor)
 ```
+(Condensed version now lives in SECTION 1 → Descriptor Text)
+(Original kept here for reference only — DO NOT render in About section)
+
+Original:
 I'm obsessive about understanding how systems work — from the database
 schema all the way up to the user experience. That mindset is what led me
 to work across backend engineering and product management simultaneously.
@@ -172,37 +186,37 @@ implementation, and coordinated delivery.
 ### 4 Phases (accordion / staggered reveal)
 
 ```
-Phase 1: UNDERSTAND
-  Items:
-    A. Stakeholder & user interviews
-    B. Requirement gathering
-    C. Problem framing
-    D. Feasibility assessment
-    E. Technical constraint mapping
+UNDERSTAND
 
-Phase 2: ARCHITECT
-  Items:
-    A. Database schema design
-    B. System data flow mapping
-    C. API endpoint planning
-    D. Tech stack decision
-    E. Entity relationship modeling
+A. Stakeholder & user interviews → "Direct conversations to map who needs what, and why — before assumptions solidify."
+B. Requirement gathering → "Translating ambiguous needs into structured, actionable specs."
+C. Problem framing → "Defining the actual problem, not just the symptom that was asked to be fixed."
+D. Feasibility assessment → "Evaluating what's buildable given the time, stack, and team available."
+E. Technical constraint mapping → "Identifying system limitations before architecture decisions lock them in."
 
-Phase 3: BUILD
-  Items:
-    A. Backend development (Laravel / C# / Java)
-    B. Database implementation & optimization
-    C. API development & integration
-    D. Query performance tuning
-    E. Feature testing & iteration
+ARCHITECT
 
-Phase 4: COORDINATE & SHIP
-  Items:
-    A. Cross-team task delegation
-    B. Timeline & milestone management
-    C. Progress reporting (LPJ / trackers)
-    D. Stakeholder communication
-    E. Post-delivery feedback analysis
+A. Database schema design → "Structuring data relationships that won't need major refactoring when the product scales."
+B. System data flow mapping → "Tracing how data moves between components, services, and users end-to-end."
+C. API endpoint planning → "Defining contracts between frontend and backend before a single line is written."
+D. Tech stack decision → "Choosing tools based on team expertise, requirements, and long-term maintenance cost."
+E. Entity relationship modeling → "Mapping entities and their relationships to catch logical gaps early."
+
+BUILD
+
+A. Backend development → "Writing clean, maintainable server-side logic across Laravel, C#, and Java."
+B. Database implementation & optimization → "Building and tuning queries, indexes, and schemas for real-world performance."
+C. API development & integration → "Developing and wiring endpoints that are predictable and well-documented."
+D. Query performance tuning → "Identifying slow queries and rewriting them before users feel the difference."
+E. Feature testing & iteration → "Validating each feature against requirements, then refining based on findings."
+
+COORDINATE & SHIP
+
+A. Cross-team task delegation → "Breaking down work into clear assigned units so no one is ever waiting on anyone."
+B. Timeline & milestone management → "Setting realistic deadlines and tracking progress without micromanaging."
+C. Progress reporting → "Producing structured LPJ and tracker reports that stakeholders actually read and find useful."
+D. Stakeholder communication → "Translating technical progress into language decision-makers understand and trust."
+E. Post-delivery feedback analysis → "Capturing lessons from each delivery to improve the next cycle."
 ```
 
 ---
@@ -475,6 +489,14 @@ Rizky Ananda Herly ©2026
 ```
 Built with Next.js · Tailwind CSS · Framer Motion
 ```
+
+### Footer Signature Quote (large, dramatic)
+```
+bUILT WITH [SYSTEMS]
+BECAUSE THE BEST PRODUCTS AREN'T DESIGNED.
+THEY'RE ENGINEERED FROM THE PROBLEM UP.
+```
+Note: "SYSTEMS" is draggable by cursor (interactive element)
 
 ---
 

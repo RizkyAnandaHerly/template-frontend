@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 /* ===================================================================
    HERO HEADLINE — from content.md → SECTION 1
@@ -10,18 +10,9 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
    Sub-tagline: DecryptedText-style character cycling effect
    =================================================================== */
 
-const HEADLINE_WORDS = [
-  "Designing",
-  "systems",
-  "that",
-  "solve",
-  "real",
-  "operational",
-  "problems.",
-];
-
 const SUBTAGLINE = "[ SYSTEMS THINKER · BACKEND DEVELOPER · PRODUCT MANAGER ]";
-const DESCRIPTOR = "Information Systems · Telkom University · Bandung, Indonesia";
+const PHILOSOPHY = "Obsessive about understanding how systems work — from the database schema to the user experience. That mindset drives me across backend engineering and product management simultaneously.";
+const LOCATION = "Information Systems · Telkom University · Bandung, Indonesia";
 
 /* ---- Character cycling / decrypted text for sub-tagline ---- */
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ·[] ";
@@ -75,31 +66,9 @@ function DecryptedText({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
-/* ---- Word-by-word blur reveal for main headline ---- */
+/* ---- Stacked headline + sub-tagline + condensed philosophy ---- */
 export default function HeroHeadline() {
   const prefersReducedMotion = useReducedMotion();
-
-  const containerVariants: Variants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: prefersReducedMotion ? 0 : 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const wordVariants: Variants = {
-    hidden: prefersReducedMotion
-      ? { opacity: 1, filter: "blur(0px)", y: 0 }
-      : { opacity: 0, filter: "blur(12px)", y: 20 },
-    visible: {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-    },
-  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -158,15 +127,20 @@ export default function HeroHeadline() {
         <DecryptedText text={SUBTAGLINE} delay={1200} />
       </motion.p>
 
-      {/* Descriptor — Satoshi Regular, subtle */}
-      <motion.p
+      {/* Descriptor — condensed philosophy + location */}
+      <motion.div
         initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.3, duration: 0.5 }}
-        className="font-satoshi font-normal text-sm text-[var(--color-text-subtle)]"
+        className="flex flex-col gap-2 mt-1"
       >
-        {DESCRIPTOR}
-      </motion.p>
+        <p className="font-satoshi font-normal text-sm md:text-base text-white/40 leading-relaxed max-w-lg">
+          {PHILOSOPHY}
+        </p>
+        <p className="font-satoshi font-normal text-sm text-[var(--color-text-subtle)]">
+          {LOCATION}
+        </p>
+      </motion.div>
     </div>
   );
 }

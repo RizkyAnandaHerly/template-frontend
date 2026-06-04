@@ -4,13 +4,17 @@ import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Copy, Check, ArrowUpRight } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
+import TerminalCard from "@/components/about/TerminalCard";
 
 /* ===================================================================
    FOOTER / CONTACT SECTION — Section 8 (DARK #09090A)
-   component-map.md layout:
-   - Left: Large "Let's connect." text + Email copy-to-clipboard CTA
-   - Right: Social links vertical stack with underline highlights
-   - Bottom: Credits & copyrights
+   Redesign v2:
+   - Left: Large CTA headline + Email copy-to-clipboard
+   - Right: Social links vertical stack
+   - Typewriter quote
+   - TerminalCard easter egg (moved from About)
+   - Signature quote: "bUILT WITH [SYSTEMS]..."
+   - Draggable "SYSTEMS" text
    - Content: content.md → SECTION 8
    =================================================================== */
 
@@ -25,7 +29,7 @@ export default function Footer() {
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText("rizkyanandaherly@gmail.com");
+    navigator.clipboard.writeText("rizkyherly14@gmail.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -67,7 +71,6 @@ export default function Footer() {
               Open to internships, collaborations, and interesting problems.
             </p>
 
-
             {/* Premium Interactive Copy Button */}
             <div className="relative mt-2 self-start">
               <button
@@ -79,7 +82,7 @@ export default function Footer() {
                     Get in touch
                   </span>
                   <span className="font-satoshi font-bold text-xs md:text-sm tracking-[0.02em]">
-                    rizkyanandaherly@gmail.com
+                    rizkyherly14@gmail.com
                   </span>
                 </div>
                 
@@ -139,7 +142,7 @@ export default function Footer() {
 
         </div>
 
-        {/* Fix 2 — Typewriter Quote */}
+        {/* ── Typewriter Quote ── */}
         <div className="mt-12 border-t border-white/10 pt-8">
           <TypeAnimation
             sequence={[
@@ -154,6 +157,19 @@ export default function Footer() {
             repeat={Infinity}
           />
         </div>
+
+        {/* ── Terminal Card — Easter Egg (moved from About) ── */}
+        <motion.div
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-12 flex justify-center"
+        >
+          <div className="w-full max-w-lg">
+            <TerminalCard />
+          </div>
+        </motion.div>
 
         {/* ── Footer Copyrights & Credentials Credits ── */}
         <div className="mt-16 lg:mt-24 pt-8 border-t border-[var(--color-border-dark)] flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -171,8 +187,21 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Fix 3 — Draggable SYSTEMS Text */}
-        <div className="relative overflow-hidden h-32 mt-8">
+        {/* ── Signature Quote — from content.md ── */}
+        <div className="mt-12 mb-4 flex flex-col items-center gap-4 text-center">
+          <p className="font-satoshi font-medium text-xs md:text-sm text-white/20 uppercase tracking-[0.15em]">
+            bUILT WITH{" "}
+            <span className="text-[var(--color-accent-primary)]/40 font-bold">[SYSTEMS]</span>
+          </p>
+          <p className="font-satoshi font-normal text-[10px] md:text-xs text-white/15 uppercase tracking-[0.12em] max-w-md leading-relaxed">
+            BECAUSE THE BEST PRODUCTS AREN&apos;T DESIGNED.
+            <br />
+            THEY&apos;RE ENGINEERED FROM THE PROBLEM UP.
+          </p>
+        </div>
+
+        {/* ── Draggable SYSTEMS Text ── */}
+        <div className="relative overflow-hidden h-32 mt-4">
           <motion.div
             drag
             dragConstraints={{ left: -300, right: 300, top: -50, bottom: 50 }}
