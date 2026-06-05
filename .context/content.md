@@ -481,12 +481,18 @@ Bandung, Indonesia
 
 ### Copyright
 ```
-Rizky Ananda Herly ©2026
+Designed & Developed by Rizky Ananda Herly.
+© 2026. All rights reserved.
 ```
 
 ### Made with text
 ```
-Built with Next.js · Tailwind CSS · Framer Motion
+Built with Next.js, Tailwind CSS, and Framer Motion.
+```
+
+### Typewriter Quote (loop infinite di footer)
+```
+THE BEST CODE IS THE ONE THAT SOLVES THE REAL PROBLEM.
 ```
 
 ### Footer Signature Quote (large, dramatic)

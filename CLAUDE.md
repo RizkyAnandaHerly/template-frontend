@@ -173,6 +173,8 @@ framer-motion      ← Animasi
 lucide-react       ← Icons
 MagicUI            ← Marquee, NumberTicker, BorderBeam, AnimatedGradient, BentoGrid
 ReactBits          ← BlurText, SplitText, SpotlightCard
+react-type-animation ← Typewriter effect (Footer quote)
+lottie-react       ← Lottie animation (MascotWalk)
 21st.dev:
   - Dynamic Island TOC (navbar)
   - Scroll Expansion Hero (project detail pages)

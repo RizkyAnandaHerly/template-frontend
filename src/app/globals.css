@@ -299,3 +299,32 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ===================================================================
+   CUSTOM CURSOR STATES — Nazwa-style dot + trailing ring
+   Hover: dot grows, ring shrinks. Click: dot pulses down.
+   =================================================================== */
+.cursor-dot--hover {
+  width: 40px !important;
+  height: 40px !important;
+  opacity: 0.25 !important;
+}
+
+.cursor-ring--hover {
+  width: 12px !important;
+  height: 12px !important;
+  opacity: 0.6 !important;
+}
+
+.cursor-dot--click {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+}

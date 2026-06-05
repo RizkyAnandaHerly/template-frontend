@@ -16,6 +16,8 @@ MagicUI      → Marquee, NumberTicker, BorderBeam, AnimatedGradient, BentoGrid
 ReactBits    → Text effects: BlurText, SplitText, DecryptedText, SpotlightCard
 21st.dev     → Dynamic Island TOC, Scroll Expansion Hero, Interactive 3D Robot
 Lucide React → Semua icons (JANGAN pakai icon library lain)
+react-type-animation → Typewriter effect di Footer quote
+lottie-react → Lottie animation di MascotWalk (floating bot)
 ```
 
 ---
@@ -279,6 +281,27 @@ Behavior:
 
 Content   : content.md → SECTION 8
 Layout    : Dark section
+```
+
+---
+
+### GLOBAL — MascotWalk (Floating Bot)
+
+```
+Component : MascotWalk
+Library   : lottie-react
+File      : src/components/ui/MascotWalk.tsx
+Asset     : public/animations/mascot.json
+
+Behavior:
+  - Fixed position, bottom-right corner
+  - Lottie animation loop infinite
+  - Hover tooltip: "rizky_bot.sh [active]"
+  - z-index: 40 (below navbar)
+
+Notes:
+  - Animasi lottie, bukan CSS animation
+  - Tidak interaktif selain hover tooltip
 ```
 
 ---
