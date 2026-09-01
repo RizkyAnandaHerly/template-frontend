@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Briefcase, Cpu, Layers, Star, Database, Flame } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import ScrollExpandMedia from "@/components/scroll-expansion-hero";
@@ -29,6 +30,19 @@ const BACKEND_AREAS = [
   "Structured RESTful API endpoints for the client interface",
 ];
 
+const APP_SCREENSHOTS = [
+  {
+    src: "/images/warehouse/dashboard_w.png",
+    label: "Staff Dashboard",
+    desc: "Overview KPI cards: inbound, QC pending, restock alerts, dan kapasitas lokasi",
+  },
+  {
+    src: "/images/warehouse/history.png",
+    label: "Order Tracking",
+    desc: "Pelacakan nomor SO dengan status processing dan riwayat pengiriman",
+  },
+];
+
 export default function WarehousePage() {
   const prefersReducedMotion = useReducedMotion();
 
@@ -51,7 +65,7 @@ export default function WarehousePage() {
       {/* Scroll Expansion Hero */}
       <ScrollExpandMedia
         mediaType="image"
-        mediaSrc="/images/warehouse/hero.svg"
+        mediaSrc="/images/warehouse/hero.png"
         bgImageSrc="/images/warehouse/bg.svg"
         title="Warehouse Management System"
         date="Internal B2B Product"
@@ -198,6 +212,66 @@ export default function WarehousePage() {
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              {/* App Screenshots Gallery */}
+              <div className="flex flex-col gap-6 pt-6 border-t border-[var(--color-border-dark)]">
+                <div className="flex flex-col gap-2">
+                  <h3 className="font-bold text-lg lg:text-xl text-[var(--color-text-primary)]">
+                    System Screenshots
+                  </h3>
+                  <p className="text-xs text-[var(--color-text-muted)]">
+                    Real screens from the Warehouse Management System.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+                  {APP_SCREENSHOTS.map((screen, index) => (
+                    <motion.div
+                      key={screen.label}
+                      initial={
+                        prefersReducedMotion
+                          ? { opacity: 1 }
+                          : { opacity: 0, y: 20 }
+                      }
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.4,
+                        delay: index * 0.1,
+                        ease: [0.25, 1, 0.5, 1],
+                      }}
+                      className="flex flex-col gap-3 group"
+                    >
+                      {/* Screenshot container */}
+                      <div className="relative aspect-[9/19.5] rounded-2xl overflow-hidden border border-[var(--color-border-dark)] bg-[var(--color-surface-dark)] transition-transform duration-300 ease-out group-hover:scale-[1.02] group-hover:border-[var(--color-accent-primary)]/20">
+                        <Image
+                          src={screen.src}
+                          alt={`Warehouse ${screen.label} screenshot`}
+                          fill
+                          sizes="(max-width: 768px) 90vw, 40vw"
+                          className="object-cover object-top"
+                        />
+                        {/* Bottom gradient overlay */}
+                        <div
+                          className="absolute bottom-0 left-0 right-0 h-1/5 pointer-events-none"
+                          style={{
+                            background:
+                              "linear-gradient(to bottom, transparent, rgba(9, 9, 10, 0.5))",
+                          }}
+                        />
+                      </div>
+                      {/* Label */}
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-satoshi font-bold text-xs text-[var(--color-text-primary)]">
+                          {screen.label}
+                        </span>
+                        <span className="font-satoshi text-[10px] text-[var(--color-text-muted)] leading-relaxed">
+                          {screen.desc}
+                        </span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
 
             </div>

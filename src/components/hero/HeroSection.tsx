@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import Image from "next/image";
 import SkillTicker from "./SkillTicker";
 import HeroHeadline from "./HeroHeadline";
 import HeroStats from "./HeroStats";
@@ -74,10 +75,10 @@ function SkillLabel({
   );
 }
 
-/* ---- Photo Placeholder: Intentional geometric design ----
-   Replaces the old dashed-border "Photo coming soon" with an 
-   animated geometric frame that looks designed, not broken. */
-function PhotoPlaceholder() {
+/* ---- Hero Photo: Real personal photo with animated accents ----
+   Replaces the geometric placeholder with actual user photo.
+   Photo has dark background → blends with hero bg (#09090A). */
+function HeroPhoto() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -89,104 +90,82 @@ function PhotoPlaceholder() {
       transition={{ delay: 0.4, duration: 0.5, ease: easeOutQuart }}
       className="flex-shrink-0 relative"
     >
+      {/* Subtle yellow accent glow behind photo */}
       <div
-        className="relative w-[200px] h-[260px] md:w-[240px] md:h-[320px] lg:w-[280px] lg:h-[370px] rounded-2xl overflow-hidden"
-        style={{ background: "var(--color-surface-dark)" }}
+        className="absolute -inset-4 rounded-2xl pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, var(--color-accent-primary) 0%, transparent 70%)",
+          opacity: 0.04,
+          filter: "blur(40px)",
+        }}
+      />
+
+      <div
+        className="relative w-[200px] h-[260px] md:w-[240px] md:h-[320px] lg:w-[280px] lg:h-[370px] rounded-2xl overflow-hidden border border-[var(--color-border-dark)]"
       >
-        {/* Animated border frame — top and left edges */}
+        {/* Actual photo */}
+        <Image
+          src="/images/PhotoPlaceholder.PNG"
+          alt="Rizky Ananda Herly — Product-minded Technical Builder"
+          fill
+          sizes="(max-width: 768px) 200px, (max-width: 1024px) 240px, 280px"
+          priority
+          className="object-cover object-top"
+        />
+
+        {/* Animated border frame — top and left edges (yellow accent) */}
         <motion.div
           initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 0.6, duration: 0.8, ease: easeOutQuart }}
-          className="absolute top-0 left-0 right-0 h-px bg-[var(--color-accent-primary)]/30 origin-left"
+          className="absolute top-0 left-0 right-0 h-px bg-[var(--color-accent-primary)]/30 origin-left z-10"
         />
         <motion.div
           initial={prefersReducedMotion ? { scaleY: 1 } : { scaleY: 0 }}
           animate={{ scaleY: 1 }}
           transition={{ delay: 0.7, duration: 0.8, ease: easeOutQuart }}
-          className="absolute top-0 left-0 bottom-0 w-px bg-[var(--color-accent-primary)]/30 origin-top"
+          className="absolute top-0 left-0 bottom-0 w-px bg-[var(--color-accent-primary)]/30 origin-top z-10"
         />
 
-        {/* Animated border frame — bottom and right edges */}
+        {/* Bottom-right border edges (subtle white) */}
         <motion.div
           initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 0.8, duration: 0.8, ease: easeOutQuart }}
-          className="absolute bottom-0 left-0 right-0 h-px bg-white/10 origin-right"
+          className="absolute bottom-0 left-0 right-0 h-px bg-white/10 origin-right z-10"
         />
         <motion.div
           initial={prefersReducedMotion ? { scaleY: 1 } : { scaleY: 0 }}
           animate={{ scaleY: 1 }}
           transition={{ delay: 0.9, duration: 0.8, ease: easeOutQuart }}
-          className="absolute top-0 right-0 bottom-0 w-px bg-white/10 origin-bottom"
+          className="absolute top-0 right-0 bottom-0 w-px bg-white/10 origin-bottom z-10"
         />
 
-        {/* Cross-hair center marker */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          {/* Horizontal line */}
-          <motion.div
-            initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 1.0, duration: 0.5, ease: easeOutQuart }}
-            className="absolute w-12 h-px bg-white/10"
-          />
-          {/* Vertical line */}
-          <motion.div
-            initial={prefersReducedMotion ? { scaleY: 1 } : { scaleY: 0 }}
-            animate={{ scaleY: 1 }}
-            transition={{ delay: 1.0, duration: 0.5, ease: easeOutQuart }}
-            className="absolute w-px h-12 bg-white/10"
-          />
-          {/* Center dot */}
-          <motion.div
-            initial={prefersReducedMotion ? { scale: 1 } : { scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.1, duration: 0.3, ease: easeOutQuart }}
-            className="relative w-2 h-2 rounded-full bg-[var(--color-accent-primary)]/40"
-          />
-        </div>
-
-        {/* Blueprint dimension labels */}
+        {/* Blueprint dimension label (top-right corner) */}
         <motion.div
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.4 }}
-          className="absolute top-3 right-3"
+          className="absolute top-3 right-3 z-10"
         >
           <span
-            className="font-satoshi text-white/10"
+            className="font-satoshi text-white/15 bg-black/40 px-1.5 py-0.5 rounded"
             style={{ fontSize: "8px", letterSpacing: "0.08em" }}
           >
             280 × 370
           </span>
         </motion.div>
 
-        {/* Bottom label — intentional, not "coming soon" */}
-        <motion.div
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.3, duration: 0.4 }}
-          className="absolute bottom-4 left-0 right-0 text-center"
-        >
-          <span className="font-satoshi font-medium text-[9px] text-white/15 uppercase tracking-[0.2em]">
-            RAH · 2026
-          </span>
-        </motion.div>
-
-        {/* Subtle pulsing glow in center */}
+        {/* Bottom gradient overlay for smooth blend with dark bg */}
         <div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          aria-hidden="true"
-        >
-          <div
-            className="w-20 h-20 rounded-full animate-pulse"
-            style={{
-              background:
-                "radial-gradient(circle, var(--color-accent-primary) 0%, transparent 70%)",
-              opacity: 0.03,
-            }}
-          />
-        </div>
+          className="absolute bottom-0 left-0 right-0 h-1/4 pointer-events-none z-[5]"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent, rgba(9, 9, 10, 0.6))",
+          }}
+        />
       </div>
     </motion.div>
   );
@@ -269,8 +248,8 @@ export default function HeroSection() {
             ))}
           </div>
 
-          {/* Center — Photo placeholder (intentional geometric design) */}
-          <PhotoPlaceholder />
+          {/* Center — Personal photo with animated accents */}
+          <HeroPhoto />
 
           {/* Right skills — hidden on mobile */}
           <div className="hidden lg:flex flex-col gap-8 lg:gap-10 flex-shrink-0 w-[140px] xl:w-[160px]">
