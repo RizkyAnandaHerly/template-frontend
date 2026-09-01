@@ -26,6 +26,11 @@ import {
 /* ===================================================================
    SKILL TICKER — from content.md → SECTION 1 → Skill Ticker
    MagicUI Marquee: double rows, reversed, with devicons and custom pills
+   
+   v2 CHANGES:
+   - Edge fade masks moved to HeroSection parent wrapper
+   - Improved hover interaction: border accent on hover
+   - Easing refinements
    =================================================================== */
 
 const SKILLS_ROW_1 = [
@@ -60,7 +65,7 @@ interface SkillItemProps {
 
 function SkillItem({ label, icon: Icon, type }: SkillItemProps) {
   return (
-    <span className="flex items-center gap-2.5 text-xs md:text-sm font-medium tracking-wide whitespace-nowrap text-[var(--color-text-muted)] bg-[var(--color-surface-dark)] border border-[var(--color-border-dark)] py-2 px-4.5 rounded-full hover:border-[var(--color-accent-primary)]/40 hover:text-white transition-all duration-300">
+    <span className="flex items-center gap-2.5 text-xs md:text-sm font-medium tracking-wide whitespace-nowrap text-[var(--color-text-muted)] bg-[var(--color-surface-dark)] border border-[var(--color-border-dark)] py-2 px-4.5 rounded-full hover:border-[var(--color-accent-primary)]/40 hover:text-white transition-all duration-200">
       {type === "devicon" ? (
         <Icon size={16} className="shrink-0" />
       ) : (
@@ -85,7 +90,7 @@ export default function SkillTicker() {
         ))}
       </Marquee>
 
-      {/* Row 2 — Reversed direction (Left to Right) with Gap 8 */}
+      {/* Row 2 — Reversed direction (Left to Right) */}
       <Marquee
         className="[--duration:45s] [--gap:2rem]"
         pauseOnHover={false}

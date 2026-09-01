@@ -1,5 +1,6 @@
 # component-map.md — LIBRARY TO SECTION MAPPING
 # Portfolio: Rizky Ananda Herly
+# Last Updated: June 2026 (v2 — Major Overhaul)
 # WAJIB dibaca sebelum install library apapun
 
 ---
@@ -10,19 +11,74 @@ Setiap library punya zona tanggung jawabnya sendiri.
 JANGAN gunakan library di luar zona yang sudah ditentukan.
 
 ```
-Shadcn/UI    → Base components: Button, Badge, Card, Tabs, Accordion
-Framer Motion → Scroll-triggered animations, page transitions, hover states
-MagicUI      → Marquee, NumberTicker, BorderBeam, AnimatedGradient, BentoGrid
-ReactBits    → Text effects: BlurText, SplitText, DecryptedText, SpotlightCard
-21st.dev     → Dynamic Island TOC, Scroll Expansion Hero, Interactive 3D Robot
-Lucide React → Semua icons (JANGAN pakai icon library lain)
+Shadcn/UI         → Base components: Button, Badge, Card, Tabs, Accordion
+Framer Motion     → Component-level: hover states, entrance anim, exit anim, layout anim
+GSAP ScrollTrigger→ Scroll-driven: parallax, pinning, section color transitions, timeline scrub
+Lenis             → Smooth scroll: inertia, smooth wheel, lerp-based scrolling
+MagicUI           → Marquee, NumberTicker, BorderBeam, AnimatedGradient, BentoGrid
+ReactBits         → Text effects: BlurText, SplitText, DecryptedText, SpotlightCard
+21st.dev          → Dynamic Island TOC, Scroll Expansion Hero, Interactive 3D Robot
+Lucide React      → ALL icons — SATU-SATUNYA icon library, JANGAN pakai lain
 react-type-animation → Typewriter effect di Footer quote
-lottie-react → Lottie animation di MascotWalk (floating bot)
+lottie-react      → Lottie animation di MascotWalk (floating bot)
+```
+
+### Animation Responsibility Split
+```
+GSAP handles:
+  - Scroll-driven parallax (ScrollTrigger)
+  - Section color transitions on scroll
+  - Timeline-based scroll scrub animations
+  - Pinning effects
+
+Framer Motion handles:
+  - Component mount/unmount animations
+  - Hover / tap / focus interactions
+  - AnimatePresence for enter/exit
+  - Layout animations
+  - useInView-triggered reveals
+
+NEVER mix: Don't use GSAP for hover states. Don't use Framer for scroll scrub.
 ```
 
 ---
 
 ## 🗺️ SECTION-BY-SECTION COMPONENT MAP
+
+---
+
+### GLOBAL — Smooth Scroll Provider
+
+```
+Component : SmoothScrollProvider
+Library   : Lenis
+Install   : npm install lenis
+File      : src/lib/smooth-scroll.ts
+Config    : duration: 1.2, easing: easeOutQuart, smoothWheel: true
+Behavior  : Wraps entire app in layout.tsx for global smooth scrolling
+```
+
+---
+
+### GLOBAL — Blueprint Grid (Signature Element)
+
+```
+Component : BlueprintGrid
+Library   : Custom (SVG + CSS)
+File      : src/components/ui/BlueprintGrid.tsx
+Behavior  :
+  - Fixed position, full viewport, pointer-events: none
+  - SVG ruler lines along left and right edges
+  - Dimension number labels as design accent (px measurements)
+  - Very subtle: opacity 0.03–0.06
+  - Hidden on mobile (< 768px), visible on desktop
+  - z-index: 1 (below all content)
+  - This is the portfolio's SIGNATURE ELEMENT — technical blueprint aesthetic
+Notes     :
+  - Matches "Technical Builder" identity
+  - Inspired by nazwatk.site drafting-board markers
+  - Must be extremely subtle — felt, not seen
+```
 
 ---
 
@@ -42,12 +98,12 @@ Behavior:
 
 Menu Items:
   Home · About · Work · Experience · Contact
-  (label sesuai content.md Section Labels)
+  (NO numbered labels — plain text only)
 
 Notes:
   - Tidak ada traditional sticky navbar
   - Z-index harus di atas semua konten: z-50 minimum
-  - Smooth scroll ke section anchor saat item diklik
+  - Smooth scroll ke section anchor saat item diklik (via Lenis)
 ```
 
 ---
@@ -61,16 +117,22 @@ Sub-component 1: SkillTicker
   File      : src/components/hero/SkillTicker.tsx
   Behavior  : Horizontal ticker kiri → kanan, loop infinite, no pause on hover
   Content   : Skill list dari content.md → SECTION 1 → Skill Ticker
+  Enhancement: Edge fade masks (gradient blur at left/right edges)
 
 Sub-component 2: HeroHeadline
-  Library   : ReactBits BlurText ATAU SplitText
+  Library   : Framer Motion (word-by-word blur reveal)
   File      : src/components/hero/HeroHeadline.tsx
-  Behavior  : Text reveal on page load (stagger per kata atau per karakter)
-  Content   : "Designing systems that solve real operational problems."
+  Content   : Stacked headline dari content.md → SECTION 1
   Font      : Clash Display Bold — WAJIB
+  RULES:
+    - MAX font-size: clamp(2.5rem, 8vw, 5.5rem) — NEVER exceed 6rem
+    - letter-spacing: -0.03em (floor: -0.04em)
+    - text-wrap: balance
+    - SATU <h1> only — use <span> for layers
+    - NO hardcoded #FFDD00 — use var(--color-accent-primary)
 
 Sub-component 3: SubTagline
-  Library   : ReactBits DecryptedText ATAU TypewriterEffect
+  Library   : Custom DecryptedText effect (Framer Motion)
   File      : src/components/hero/HeroHeadline.tsx (inline)
   Content   : "[ SYSTEMS THINKER · BACKEND DEVELOPER · PRODUCT MANAGER ]"
   Font      : Satoshi Medium, muted color
@@ -79,14 +141,22 @@ Sub-component 4: HeroStats
   Library   : MagicUI NumberTicker
   Install   : npx shadcn@latest add "https://magicui.design/r/number-ticker"
   File      : src/components/hero/HeroStats.tsx
-  Behavior  : Count up saat stats masuk viewport (IntersectionObserver)
+  Behavior  : Count up saat stats masuk viewport
   Content   : 4 stats dari content.md → SECTION 1 → Credibility Stats
+  Enhancement: Reduce initial delay to ~1.0s (was 2.0s)
+
+Sub-component 5: Photo Placeholder
+  Current   : Dashed border + "Photo coming soon" — looks broken
+  Redesign  : Intentional abstract design: animated geometric border,
+              subtle glow pulse, or geometric silhouette.
+              Must look "designed" not "missing".
 
 Layout Notes:
   - Dark section: bg #09090A
-  - Skill ticker di atas headline (seperti Nazwa)
-  - Photo/foto: dummy placeholder dulu, ganti saat foto siap
-  - Stats di bawah foto atau di samping (responsive)
+  - Skill ticker at top (2 rows)
+  - Photo CENTER with skill labels flanking L/R (desktop)
+  - Stats bar at bottom
+  - NO section number label
 ```
 
 ---
@@ -98,10 +168,8 @@ Sub-component 1: RobotInteractive
   Library   : Interactive 3D Robot (21st.dev erikx)
   Install   : npx shadcn@latest add https://21st.dev/r/erikx/interactive-3d-robot
   File      : src/components/about/RobotInteractive.tsx
-  Behavior  : 3D robot yang interaktif (follow mouse atau idle animation)
-  Position  : Di atas atau di samping philosophy text
-  Fallback  : Jika Three.js terlalu berat di mobile, wrap dengan:
-              <Suspense fallback={<PlaceholderAvatar />}>
+  Behavior  : 3D robot interaktif (follow mouse atau idle animation)
+  Fallback  : <Suspense fallback={<PlaceholderAvatar />}>
   Notes     : Test FPS di mobile setelah install. Target: 30fps minimum.
 
 Sub-component 2: PhilosophyText
@@ -110,17 +178,23 @@ Sub-component 2: PhilosophyText
   Content   : Philosophy text dari content.md → SECTION 2
 
 Sub-component 3: SkillsGrid
-  Library   : MagicUI BentoGrid + BorderBeam (hover effect)
-  Install   : npx shadcn@latest add "https://magicui.design/r/bento-grid"
-              npx shadcn@latest add "https://magicui.design/r/border-beam"
+  Library   : Framer Motion + Lucide React icons
   File      : src/components/about/SkillsGrid.tsx
-  Behavior  : Grid 6 skill cards, hover = BorderBeam highlight + reveal description
+  REDESIGN  : Complete overhaul — NO identical card grids (impeccable ban)
+  New Design:
+    - Asymmetric card layout: CORE skills = larger cards, SUPPORTING = smaller
+    - Icons: Lucide React SVG (Code, Database, ClipboardList, Lightbulb, Search, Users)
+    - NO external CDN (remove LordIcon completely)
+    - Hover: item expands, description reveals, non-hovered dims to opacity 0.3
+    - Yellow accent line animation on hover
+    - Graph-paper background texture
   Content   : 6 skills dari content.md → SECTION 2B
 
-Layout Notes:
+Section Label: "ABOUT ME" — NO number prefix
+Layout:
   - Light section: bg #F0F4F8
   - Robot di kiri/tengah, text di kanan (desktop)
-  - Skills grid full-width di bawah robot + text
+  - Skills grid full-width below
 ```
 
 ---
@@ -133,17 +207,18 @@ Library   : Framer Motion (staggered reveal) + Shadcn Accordion (opsional)
 File      : src/components/approach/ApproachSection.tsx
 
 Behavior:
-  - 4 phase cards (UNDERSTAND, ARCHITECT, BUILD, COORDINATE)
+  - 4 phase columns (UNDERSTAND, ARCHITECT, BUILD, COORDINATE)
   - Setiap phase: judul + sub-items berlabel (A, B, C, D, E)
-  - Sub-items muncul dengan stagger animation (delay per item)
-  - Mirip struktur Approach section Nazwa
+  - Sub-items: hover → pill-style inline tooltip (not popup box)
+  - Non-hovered items dim to 0.35 opacity
+  - Graph-paper grid background
+  - Phase connectors: visual flow indicator between phases
 
 Content   : content.md → SECTION 3 → 4 Phases
+
+Phase Numbering: KEEP (01–04) — this IS genuinely sequential
+Section Label: "MY APPROACH" — NO "01.2 ·" prefix
 Layout    : Dark section (bg #09090A)
-Notes:
-  - Nomor phase: styled prominent (01, 02, 03, 04)
-  - Sub-item label: huruf kapital, muted color
-  - Tidak perlu click/expand — semua visible, animasi saat scroll
 ```
 
 ---
@@ -152,18 +227,18 @@ Notes:
 
 ```
 Component : ProjectCard (custom large-format)
-Library   : Framer Motion (scale on scroll entry) + Next.js Image
+Library   : Framer Motion (scroll parallax) + GSAP ScrollTrigger + Next.js Image
 File      : src/components/projects/ProjectCard.tsx
            src/components/projects/FeaturedSection.tsx
 
 Style Reference: nazwatk.site featured section
 Behavior:
   - Setiap card: full-width, height 70–80vh
-  - Background: image/screenshot di-crop cover (bukan video — kita pakai foto)
-  - Image scale: 1.0 → 1.05 subtle saat card masuk viewport (parallax feel)
-  - Overlay: gradient gelap di bawah untuk text visibility
-  - Text overlay: nomor proyek + judul + role + tags + CTA button
-  - Hover: slight scale up (1.02), CTA menjadi visible/brighter
+  - Background: project screenshot (generated via generate_image tool)
+  - Image scale: parallax via GSAP ScrollTrigger
+  - Overlay: gradient for text visibility
+  - Text overlay: title + role + tags + CTA button
+  - CTA hover: arrow rotation + translate
   - Click: navigate ke /projects/[slug]
 
 Content:
@@ -171,10 +246,11 @@ Content:
   - PROJECT 02: Warehouse System (content.md → SECTION 4 → PROJECT 02)
 
 Image Path:
-  - ObatIn    : /public/images/obatin/ (screenshot app)
-  - Warehouse : /public/images/warehouse/ (screenshot dashboard)
+  - ObatIn    : /public/images/obatin/ (generated screenshot)
+  - Warehouse : /public/images/warehouse/ (generated screenshot)
 
-Layout: alternating dark/light background antar section
+Section Label: "FEATURED PROJECTS" — NO number prefix
+Layout: Light section (bg #F0F4F8)
 ```
 
 ---
@@ -186,16 +262,12 @@ Component 1: ScrollExpansionHero
   Library   : Scroll Expansion Hero (21st.dev)
   Install   : npx shadcn@latest add https://21st.dev/r/arunachalam0606/scroll-expansion-hero
   File      : src/app/projects/obatin/page.tsx
-  Behavior  : Image ObatIn mulai kecil → expand full viewport saat scroll
-  Content   : Screenshot utama ObatIn + headline "ObatIn"
 
 Component 2: CaseStudyContent
   Library   : Framer Motion (fade in sections)
-  Content   : Semua detail dari content.md → PROJECT 01 halaman detail
+  Content   : content.md → PROJECT 01 halaman detail
 
-Tags Component:
-  Library   : Shadcn Badge
-  Content   : HACKATHON · 1ST PLACE · MOBILE · HEALTH TECH · 2026
+Tags: Shadcn Badge → HACKATHON · 1ST PLACE · MOBILE · HEALTH TECH · 2026
 ```
 
 ---
@@ -203,13 +275,9 @@ Tags Component:
 ### PAGE: /projects/warehouse — Detail Case Study
 
 ```
-Component 1: ScrollExpansionHero
-  (sama dengan obatin, beda image dan konten)
-  Content   : Screenshot Warehouse dashboard + headline
-
-Component 2: CaseStudyContent
-  Content   : content.md → PROJECT 02 halaman detail
-  Status Badge: "WORK IN PROGRESS" — Shadcn Badge dengan warna amber/yellow
+Component 1: ScrollExpansionHero (sama, beda image/konten)
+Component 2: CaseStudyContent → content.md → PROJECT 02
+Status Badge: "WORK IN PROGRESS" — amber/yellow
 ```
 
 ---
@@ -222,12 +290,14 @@ Library   : Framer Motion (stagger reveal per entry)
 File      : src/components/experience/ExperienceTimeline.tsx
 
 Behavior:
-  - Vertical timeline dengan garis connector
-  - Setiap entry: period + role + org + description
-  - Entries muncul satu per satu saat scroll (stagger 0.15s delay)
-  - Tahun/period: styled bold dengan accent color (#FFDD00 untuk dark bg)
+  - Vertical timeline dengan animated connector
+  - Connector: animated gradient flow down the line (GSAP or Framer scroll)
+  - Entries stagger on scroll (0.15s delay)
+  - Period dates: styled bold, accent color
+  - Hover: subtle highlight per entry
 
 Content   : content.md → SECTION 5 → Timeline Entries (5 entries)
+Section Label: "EXPERIENCE" — NO number prefix
 Layout    : Dark section (bg #09090A)
 ```
 
@@ -237,17 +307,19 @@ Layout    : Dark section (bg #09090A)
 
 ```
 Component : TestimonialsMarquee
-Library   : MagicUI Marquee (sama dengan SkillTicker tapi vertikal atau horizontal)
+Library   : MagicUI Marquee
 File      : src/components/testimonials/TestimonialsSection.tsx
 
 Behavior:
   - Auto-scroll horizontal, loop infinite
-  - Setiap item: quote + nama + role + avatar placeholder
-  - Reverse direction untuk baris kedua (jika 2 baris)
+  - Row 1: leftward, Row 2: rightward (reversed)
+  - Cards MUST vary — not identical card grid
+  - Gradient ring around avatar initials
+  - Adjust speed for readability
 
 Content   : content.md → SECTION 6 → 5 Dummy Testimonials
+Section Label: "TESTIMONIALS" — NO number prefix
 Layout    : Light section (bg #F0F4F8)
-Notes     : Ganti dummy dengan real testimonials sebelum launch
 ```
 
 ---
@@ -255,12 +327,10 @@ Notes     : Ganti dummy dengan real testimonials sebelum launch
 ### SECTION 7 — CREDENTIALS TICKER
 
 ```
-Component : CredentialsTicker
+Component : CredentialsTicker (inline below testimonials)
 Library   : MagicUI Marquee
 File      : src/components/testimonials/TestimonialsSection.tsx (inline bawah)
-
-Content   : content.md → SECTION 7 → Credentials items
-Behavior  : Logo/text ticker horizontal, auto-scroll
+Content   : content.md → SECTION 7
 ```
 
 ---
@@ -269,17 +339,20 @@ Behavior  : Logo/text ticker horizontal, auto-scroll
 
 ```
 Component : Footer
-Library   : MagicUI AnimatedGradient (background subtle)
+Library   : Framer Motion + react-type-animation
            Lucide React (icons: Mail, Linkedin, Github, Instagram)
 File      : src/components/footer/Footer.tsx
 
 Behavior:
-  - Animated gradient background (subtle, dark)
-  - Large CTA headline (Clash Display)
-  - Social links dengan hover scale (Framer Motion)
-  - Location + copyright text
+  - Large CTA headline (Clash Display), text-wrap: balance
+  - CTA headline: per-word animation on scroll entry
+  - Social links: hover underline reveal + icon transform
+  - Signature quote: VISIBLE (minimum text-white/40, not /15)
+  - Draggable SYSTEMS: spring physics (damping, stiffness)
+  - Typewriter quote loop
 
 Content   : content.md → SECTION 8
+Section Label: "CONTACT" — NO number prefix
 Layout    : Dark section
 ```
 
@@ -298,10 +371,6 @@ Behavior:
   - Lottie animation loop infinite
   - Hover tooltip: "rizky_bot.sh [active]"
   - z-index: 40 (below navbar)
-
-Notes:
-  - Animasi lottie, bukan CSS animation
-  - Tidak interaktif selain hover tooltip
 ```
 
 ---
@@ -311,22 +380,25 @@ Notes:
 Jalankan ini berurutan saat build tiap section:
 
 ```bash
-# Fase 1 — Navbar
+# Foundation — Smooth Scroll
+npm install lenis
+
+# Navbar
 npx shadcn@latest add https://21st.dev/r/digitalzone0707/dynamic-island-toc
 
-# Fase 2 — Hero
+# Hero
 npx shadcn@latest add "https://magicui.design/r/marquee"
 npx shadcn@latest add "https://magicui.design/r/number-ticker"
 
-# Fase 3 — About
+# About
 npx shadcn@latest add https://21st.dev/r/erikx/interactive-3d-robot
 npx shadcn@latest add "https://magicui.design/r/bento-grid"
 npx shadcn@latest add "https://magicui.design/r/border-beam"
 
-# Fase 4 — Projects (detail pages)
+# Projects (detail pages)
 npx shadcn@latest add https://21st.dev/r/arunachalam0606/scroll-expansion-hero
 
-# Fase 5 — Footer
+# Footer
 npx shadcn@latest add "https://magicui.design/r/animated-gradient-text"
 ```
 
@@ -337,8 +409,9 @@ npx shadcn@latest add "https://magicui.design/r/animated-gradient-text"
 ```
 ❌ @magicuidesign/cli cursor flag  → Ini untuk Cursor, bukan Antigravity
 ❌ Three.js manual               → Sudah include di robot component
-❌ GSAP                          → Kita pakai Framer Motion, tidak perlu dua
-❌ Anime.js                      → Sama, Framer Motion sudah cukup
+❌ Anime.js                      → Overlap dengan Framer Motion
 ❌ Swiper.js                     → Kita pakai MagicUI Marquee untuk carousel
 ❌ React Spring                  → Overlap dengan Framer Motion
+❌ LordIcon                      → External CDN, gunakan Lucide React
+❌ Any other icon library         → HANYA Lucide React
 ```

@@ -36,7 +36,7 @@
 
 ### Section Order Override
 1. Hero (dark)
-2. About Me (light) — includes Robot + Skills Grid
+2. About Me (light) — 
 3. Approach (dark) — 4 phases
 4. Featured Projects (light) — 2 large-format cards
 5. Experience (dark) — timeline

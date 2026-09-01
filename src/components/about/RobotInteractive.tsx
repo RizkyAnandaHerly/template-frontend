@@ -36,18 +36,21 @@ export default function RobotInteractive() {
   const [key, setKey] = useState(0); // For looping reset
 
   useEffect(() => {
-    // Hide all lines at start of loop
-    setVisibleLines([]);
-
     const timers: NodeJS.Timeout[] = [];
 
-    // Schedule each line
-    TERMINAL_DATA.forEach((line, index) => {
-      const timer = setTimeout(() => {
-        setVisibleLines((prev) => [...prev, index]);
-      }, line.delay);
-      timers.push(timer);
-    });
+    // Reset lines first (asynchronously to avoid React's warning)
+    const initTimer = setTimeout(() => {
+      setVisibleLines([]);
+      
+      // Schedule each line
+      TERMINAL_DATA.forEach((line, index) => {
+        const timer = setTimeout(() => {
+          setVisibleLines((prev) => [...prev, index]);
+        }, line.delay);
+        timers.push(timer);
+      });
+    }, 0);
+    timers.push(initTimer);
 
     // Loop reset timer (12 seconds)
     const resetTimer = setTimeout(() => {

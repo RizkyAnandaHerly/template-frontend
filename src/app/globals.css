@@ -76,7 +76,7 @@
 }
 
 /* ===================================================================
-   DESIGN TOKEN CSS VARIABLES — from design-tokens.md
+   DESIGN TOKEN CSS VARIABLES — from design-tokens.md v2
    =================================================================== */
 :root {
   /* ---- Dark sections (Hero, Approach, Experience, Footer) ---- */
@@ -105,6 +105,11 @@
   --color-info: #5E94B3;
   --color-hackathon: #FFDD00;
 
+  /* ---- Blueprint grid colors (signature element) ---- */
+  --color-blueprint-line: rgba(255, 255, 255, 0.03);
+  --color-blueprint-marker: rgba(255, 255, 255, 0.06);
+  --color-blueprint-line-light: rgba(7, 9, 12, 0.04);
+
   /* ---- Shadow depths (from MASTER.md) ---- */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -119,6 +124,11 @@
   --space-xl: 2rem;
   --space-2xl: 3rem;
   --space-3xl: 4rem;
+
+  /* ---- Custom easings (impeccable approved) ---- */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-quart: cubic-bezier(0.5, 0, 0.75, 0);
 
   /* ---- Shadcn base tokens ---- */
   --background: oklch(1 0 0);
@@ -195,12 +205,23 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    cursor: none !important;
+  }
+
+  /* Custom cursor: only active when .has-custom-cursor is on <html>
+     This replaces the old `cursor: none !important` on ALL elements
+     which was a UX disaster (broke cursor on inputs, links, etc.) */
+  html.has-custom-cursor * {
+    cursor: none;
+  }
+  /* Restore cursor on interactive elements even with custom cursor */
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor select {
+    cursor: text;
   }
 
   html {
     @apply font-satoshi;
-    scroll-behavior: smooth;
   }
 
   body {
@@ -208,6 +229,15 @@
     color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Typography: text-wrap rules from impeccable skill */
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p, li, dd {
+    text-wrap: pretty;
   }
 }
 
@@ -284,6 +314,64 @@
       padding-bottom: 8rem;
     }
   }
+
+  /* Section transition gradients — smooth color blending */
+  .section-transition-dark-to-light {
+    background: linear-gradient(
+      to bottom,
+      var(--color-bg-dark) 0%,
+      var(--color-bg-light) 100%
+    );
+    height: 8rem;
+  }
+
+  .section-transition-light-to-dark {
+    background: linear-gradient(
+      to bottom,
+      var(--color-bg-light) 0%,
+      var(--color-bg-dark) 100%
+    );
+    height: 8rem;
+  }
+
+  /* Graph paper background — for specific sections */
+  .bg-graph-paper-dark {
+    background-image:
+      linear-gradient(var(--color-blueprint-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-blueprint-line) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .bg-graph-paper-light {
+    background-image:
+      linear-gradient(var(--color-blueprint-line-light) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-blueprint-line-light) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+}
+
+/* ===================================================================
+   LENIS SMOOTH SCROLL — base CSS
+   =================================================================== */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 /* ===================================================================
@@ -301,8 +389,9 @@
 }
 
 /* ===================================================================
-   CUSTOM CURSOR STATES — Nazwa-style dot + trailing ring
+   CUSTOM CURSOR STATES — dot + trailing ring
    Hover: dot grows, ring shrinks. Click: dot pulses down.
+   Only active when html.has-custom-cursor is set.
    =================================================================== */
 .cursor-dot--hover {
   width: 40px !important;

@@ -60,8 +60,10 @@ export default function TerminalCard() {
   useEffect(() => {
     if (!isInView) {
       // Reset when leaving viewport so it replays on re-entry
-      resetAndStart();
-      return;
+      const timer = setTimeout(() => {
+        resetAndStart();
+      }, 0);
+      return () => clearTimeout(timer);
     }
 
     // Show first block after a short initial delay

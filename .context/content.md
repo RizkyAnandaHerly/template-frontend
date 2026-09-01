@@ -1,5 +1,6 @@
 # content.md — SEMUA TEKS WEBSITE
 # Portfolio: Rizky Ananda Herly
+# Last Updated: June 2026 (v2 — Major Overhaul)
 # WAJIB dibaca sebelum menulis teks apapun
 
 ---
@@ -26,19 +27,20 @@ Cross-functional Collaboration · MySQL · Next.js · C# · Java · Technical Do
 Requirement Analysis · Stakeholder Coordination · Problem Solving ·
 ```
 
-### Stacked Headline (3-layer, Clash Display Bold)
+### Stacked Headline (single <h1> with <span> layers, Clash Display Bold)
 ```
-Layer 1 (small, muted) : IM YOUR
-Layer 2 (large, white)  : T-SHAPED
-Layer 3 (large, yellow) : TECHNICAL BUILDER
+Layer 1 (small, muted <span>) : IM YOUR
+Layer 2 (large, white <span>) : T-SHAPED
+Layer 3 (large, yellow <span>): TECHNICAL BUILDER
 ```
+Note: All three layers inside ONE <h1> element using <span> — NOT multiple <h1> tags.
 
 ### Subtitle (Satoshi Regular, below stacked headline)
 ```
 Designing systems that solve real operational problems.
 ```
 
-### Sub-tagline (ReactBits DecryptedText atau TypewriterEffect)
+### Sub-tagline (DecryptedText animation)
 ```
 [ SYSTEMS THINKER · BACKEND DEVELOPER · PRODUCT MANAGER ]
 ```
@@ -64,9 +66,9 @@ Stat 4: 2        label: "Products Built"
 
 ## 👤 SECTION 2 — ABOUT ME
 
-### Label
+### Section Label (NO numbered prefix)
 ```
-01 · ABOUT ME
+ABOUT ME
 ```
 
 ### Hook Text (sebelum robot / di samping robot)
@@ -116,48 +118,64 @@ ANALYTICAL, SYSTEMATIC, AND OUTCOME-DRIVEN.
 
 ## 🧠 SECTION 2B — SKILLS VISUALIZATION
 
-### Section Label
+### Section Label (NO numbered prefix)
 ```
-01.1 · MY SKILLS
+MY SKILLS
 ```
 
-### Skills untuk BentoGrid (setiap skill ada title + description)
+### Skills Grid Header
+```
+IM YOUR T-SHAPED TECHNICAL BUILDER ↘
+```
+
+### Skills Grid Hint
+```
+[HOVER] THE ELEMENTS TO SEE DETAILS.
+```
+
+### Skills (asymmetric layout — CORE = larger, SUPPORTING = smaller)
 
 ```
-Skill 1:
+Skill 1 (CORE — large card):
   Title   : Backend Development
   Desc    : Building server-side logic, REST APIs, and database-driven
             applications using Laravel, and C#.
+  Icon    : Lucide "Code"
   Tag     : Core
 
-Skill 2:
+Skill 2 (CORE — large card):
   Title   : Database Architecture
   Desc    : Designing schemas, writing optimized queries, and managing
             relational databases. Teaching SQL at laboratory level.
+  Icon    : Lucide "Database"
   Tag     : Core
 
-Skill 3:
+Skill 3 (CORE — large card):
   Title   : Project Management
   Desc    : Planning programs, managing timelines, delegating tasks,
             and producing accountability reports (LPJ).
+  Icon    : Lucide "ClipboardList"
   Tag     : Core
 
-Skill 4:
+Skill 4 (SUPPORTING — smaller card):
   Title   : Product Strategy
   Desc    : Translating business problems into PRDs, FRDs, and product
             roadmaps. Developed business plan for 1st place hackathon.
+  Icon    : Lucide "Lightbulb"
   Tag     : Supporting
 
-Skill 5:
+Skill 5 (SUPPORTING — smaller card):
   Title   : System Analysis
   Desc    : Mapping requirements to system logic, identifying process
             gaps, and structuring functional specifications.
+  Icon    : Lucide "Search"
   Tag     : Supporting
 
-Skill 6:
+Skill 6 (SUPPORTING — smaller card):
   Title   : Cross-functional Collaboration
   Desc    : Coordinating between UI/UX, engineering, and stakeholder
             teams across organizational and hackathon environments.
+  Icon    : Lucide "Users"
   Tag     : Supporting
 ```
 
@@ -165,9 +183,9 @@ Skill 6:
 
 ## ⚙️ SECTION 3 — APPROACH
 
-### Section Label
+### Section Label (NO numbered prefix)
 ```
-01.2 · MY APPROACH
+MY APPROACH
 ```
 
 ### Section Title
@@ -182,7 +200,7 @@ begins with understanding the real problem, then moves through architecture,
 implementation, and coordinated delivery.
 ```
 
-### 4 Phases (accordion / staggered reveal)
+### 4 Phases (numbered 01–04 within section — this IS sequential)
 
 ```
 UNDERSTAND
@@ -222,9 +240,9 @@ E. Post-delivery feedback analysis → "Capturing lessons from each delivery to 
 
 ## 🚀 SECTION 4 — FEATURED PROJECTS
 
-### Section Label
+### Section Label (NO numbered prefix)
 ```
-02 · FEATURED PROJECTS
+FEATURED PROJECTS
 ```
 
 ---
@@ -333,9 +351,9 @@ STATUS NOTE:
 
 ## 📅 SECTION 5 — EXPERIENCE
 
-### Section Label
+### Section Label (NO numbered prefix)
 ```
-03 · EXPERIENCE
+EXPERIENCE
 ```
 
 ### Timeline Entries (chronological descending)
@@ -386,9 +404,9 @@ Entry 5:
 
 ## 💬 SECTION 6 — TESTIMONIALS
 
-### Section Label
+### Section Label (NO numbered prefix)
 ```
-04 · TESTIMONIALS
+TESTIMONIALS
 ```
 
 ### Dummy Testimonials (untuk diisi real nanti)
@@ -450,7 +468,12 @@ Recognition & Education
 
 ## 📬 SECTION 8 — FOOTER / CONTACT
 
-### CTA Headline (Clash Display Bold, large)
+### Section Label (NO numbered prefix)
+```
+CONTACT
+```
+
+### CTA Headline (Clash Display Bold, large, text-wrap: balance)
 ```
 Let's build something
 that actually works.
@@ -495,13 +518,13 @@ Built with Next.js, Tailwind CSS, and Framer Motion.
 THE BEST CODE IS THE ONE THAT SOLVES THE REAL PROBLEM.
 ```
 
-### Footer Signature Quote (large, dramatic)
+### Footer Signature Quote (large, dramatic — MUST be visible, min opacity 40%)
 ```
 bUILT WITH [SYSTEMS]
 BECAUSE THE BEST PRODUCTS AREN'T DESIGNED.
 THEY'RE ENGINEERED FROM THE PROBLEM UP.
 ```
-Note: "SYSTEMS" is draggable by cursor (interactive element)
+Note: "SYSTEMS" is draggable by cursor (interactive element, spring physics)
 
 ---
 

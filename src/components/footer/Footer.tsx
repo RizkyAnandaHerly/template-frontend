@@ -8,15 +8,16 @@ import TerminalCard from "@/components/about/TerminalCard";
 
 /* ===================================================================
    FOOTER / CONTACT SECTION — Section 8 (DARK #09090A)
-   Redesign v2:
-   - Left: Large CTA headline + Email copy-to-clipboard
-   - Right: Social links vertical stack
-   - Typewriter quote
-   - TerminalCard easter egg (moved from About)
-   - Signature quote: "bUILT WITH [SYSTEMS]..."
-   - Draggable "SYSTEMS" text
-   - Content: content.md → SECTION 8
+   v2 Overhaul:
+   - Section label: "CONTACT" (NO numbered prefix)
+   - CTA headline: text-wrap: balance (via globals.css h2 rule)
+   - Signature quote: VISIBLE (min opacity 40%, was 15%)
+   - Draggable SYSTEMS: spring physics (damping, stiffness)
+   - Social links: hover underline reveal
+   - Easing: ease-out-quart
    =================================================================== */
+
+const easeOutQuart = [0.25, 1, 0.5, 1] as const;
 
 const SOCIAL_LINKS = [
   { name: "LinkedIn", href: "https://linkedin.com/in/rizkyanandaherly/" },
@@ -35,38 +36,47 @@ export default function Footer() {
   };
 
   return (
-    <footer id="contact" className="section-dark border-t border-[var(--color-border-dark)] overflow-hidden">
+    <footer
+      id="contact"
+      className="section-dark border-t border-[var(--color-border-dark)] overflow-hidden"
+    >
       <div className="container-portfolio">
-        
-        {/* ── Section Label ── */}
+        {/* ── Section Label — NO numbered prefix ── */}
         <motion.p
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
+          initial={
+            prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }
+          }
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.4, ease: easeOutQuart }}
           className="font-satoshi font-medium text-sm uppercase tracking-[0.08em] mb-12 lg:mb-16 text-[var(--color-text-muted)]"
         >
-          05 · CONTACT
+          CONTACT
         </motion.p>
 
         {/* ── Main Footer Grid ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-          
           {/* Left Column: Headline + Copy + Clipboard Email CTA */}
           <motion.div
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
+            initial={
+              prefersReducedMotion
+                ? { opacity: 1 }
+                : { opacity: 0, y: 24 }
+            }
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: easeOutQuart }}
             className="lg:col-span-7 flex flex-col gap-6"
           >
             <h2
               className="font-clash font-bold leading-[1.1] tracking-[-0.02em] text-white uppercase"
               style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
             >
-              Let&apos;s build something<br />that actually works.
+              Let&apos;s build something
+              <br />
+              that actually works.
             </h2>
-            
+
             <p className="font-satoshi font-normal text-sm lg:text-base text-[var(--color-text-muted)] leading-[1.7] max-w-xl">
               Open to internships, collaborations, and interesting problems.
             </p>
@@ -75,7 +85,7 @@ export default function Footer() {
             <div className="relative mt-2 self-start">
               <button
                 onClick={handleCopyEmail}
-                className="group relative inline-flex items-center gap-6 px-6 py-4.5 rounded-2xl bg-[var(--color-surface-dark)] border border-[var(--color-border-dark)] text-[var(--color-text-primary)] hover:border-[var(--color-accent-primary)]/50 hover:bg-[rgba(255,255,255,0.06)] transition-all duration-300 cursor-pointer"
+                className="group relative inline-flex items-center gap-6 px-6 py-4.5 rounded-2xl bg-[var(--color-surface-dark)] border border-[var(--color-border-dark)] text-[var(--color-text-primary)] hover:border-[var(--color-accent-primary)]/50 hover:bg-[rgba(255,255,255,0.06)] transition-all duration-200 cursor-pointer"
               >
                 <div className="flex flex-col items-start gap-1">
                   <span className="font-satoshi font-medium text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
@@ -85,12 +95,12 @@ export default function Footer() {
                     rizkyherly14@gmail.com
                   </span>
                 </div>
-                
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/5 transition-colors duration-300 group-hover:bg-[var(--color-accent-primary)] group-hover:text-black">
+
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/5 transition-colors duration-200 group-hover:bg-[var(--color-accent-primary)] group-hover:text-black">
                   {copied ? (
                     <Check className="w-4 h-4" />
                   ) : (
-                    <Copy className="w-4 h-4 transition-transform duration-300 group-hover:scale-105" />
+                    <Copy className="w-4 h-4 transition-transform duration-200 group-hover:scale-105" />
                   )}
                 </div>
               </button>
@@ -99,10 +109,22 @@ export default function Footer() {
               <AnimatePresence>
                 {copied && (
                   <motion.div
-                    initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10, scale: 0.95, x: "-50%" }}
-                    animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: -45, scale: 1, x: "-50%" }}
-                    exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.95, x: "-50%" }}
-                    transition={{ duration: 0.2 }}
+                    initial={
+                      prefersReducedMotion
+                        ? { opacity: 1 }
+                        : { opacity: 0, y: 10, scale: 0.95, x: "-50%" }
+                    }
+                    animate={
+                      prefersReducedMotion
+                        ? { opacity: 1 }
+                        : { opacity: 1, y: -45, scale: 1, x: "-50%" }
+                    }
+                    exit={
+                      prefersReducedMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, y: 10, scale: 0.95, x: "-50%" }
+                    }
+                    transition={{ duration: 0.15, ease: easeOutQuart }}
                     className="absolute top-0 left-1/2 px-3.5 py-1.5 rounded-lg bg-[var(--color-accent-primary)] text-black font-satoshi font-bold text-xs uppercase tracking-wider select-none shadow-md z-20 pointer-events-none"
                   >
                     Copied!
@@ -114,16 +136,24 @@ export default function Footer() {
 
           {/* Right Column: Social directories stack */}
           <motion.div
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
+            initial={
+              prefersReducedMotion
+                ? { opacity: 1 }
+                : { opacity: 0, y: 24 }
+            }
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 0.5,
+              delay: 0.08,
+              ease: easeOutQuart,
+            }}
             className="lg:col-span-5 flex flex-col gap-6 lg:justify-end"
           >
             <span className="font-satoshi font-medium text-[10px] lg:text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
               Directories
             </span>
-            
+
             <div className="flex flex-col w-full">
               {SOCIAL_LINKS.map((link) => (
                 <a
@@ -131,15 +161,18 @@ export default function Footer() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex justify-between items-center py-4 border-b border-[var(--color-border-dark)] font-satoshi font-bold text-sm lg:text-base tracking-[0.02em] text-[var(--color-text-subtle)] hover:text-[var(--color-accent-primary)] transition-colors duration-300"
+                  className="group relative flex justify-between items-center py-4 border-b border-[var(--color-border-dark)] font-satoshi font-bold text-sm lg:text-base tracking-[0.02em] text-[var(--color-text-subtle)] hover:text-[var(--color-accent-primary)] transition-colors duration-200"
                 >
-                  <span>{link.name}</span>
-                  <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <span className="relative">
+                    {link.name}
+                    {/* Hover underline reveal */}
+                    <span className="absolute bottom-0 left-0 w-0 h-px bg-[var(--color-accent-primary)] group-hover:w-full transition-all duration-300" />
+                  </span>
+                  <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               ))}
             </div>
           </motion.div>
-
         </div>
 
         {/* ── Typewriter Quote ── */}
@@ -158,12 +191,14 @@ export default function Footer() {
           />
         </div>
 
-        {/* ── Terminal Card — Easter Egg (moved from About) ── */}
+        {/* ── Terminal Card — Easter Egg ── */}
         <motion.div
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+          initial={
+            prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }
+          }
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.15, ease: easeOutQuart }}
           className="mt-12 flex justify-center"
         >
           <div className="w-full max-w-lg">
@@ -171,7 +206,7 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* ── Footer Copyrights & Credentials Credits ── */}
+        {/* ── Footer Copyrights & Credits ── */}
         <div className="mt-16 lg:mt-24 pt-8 border-t border-[var(--color-border-dark)] flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="flex flex-col gap-1">
             <p className="font-satoshi font-medium text-xs lg:text-sm text-[var(--color-text-muted)]">
@@ -181,42 +216,48 @@ export default function Footer() {
               Built with Next.js, Tailwind CSS, and Framer Motion.
             </p>
           </div>
-          
+
           <p className="font-satoshi font-normal text-xs lg:text-sm text-[var(--color-text-muted)] opacity-70">
             &copy; 2026. All rights reserved.
           </p>
         </div>
 
-        {/* ── Signature Quote — from content.md ── */}
+        {/* ── Signature Quote — VISIBLE (min opacity 40%) ── */}
         <div className="mt-12 mb-4 flex flex-col items-center gap-4 text-center">
-          <p className="font-satoshi font-medium text-xs md:text-sm text-white/20 uppercase tracking-[0.15em]">
+          <p className="font-satoshi font-medium text-xs md:text-sm text-white/40 uppercase tracking-[0.15em]">
             bUILT WITH{" "}
-            <span className="text-[var(--color-accent-primary)]/40 font-bold">[SYSTEMS]</span>
+            <span className="text-[var(--color-accent-primary)]/60 font-bold">
+              [SYSTEMS]
+            </span>
           </p>
-          <p className="font-satoshi font-normal text-[10px] md:text-xs text-white/15 uppercase tracking-[0.12em] max-w-md leading-relaxed">
+          <p className="font-satoshi font-normal text-[10px] md:text-xs text-white/30 uppercase tracking-[0.12em] max-w-md leading-relaxed">
             BECAUSE THE BEST PRODUCTS AREN&apos;T DESIGNED.
             <br />
             THEY&apos;RE ENGINEERED FROM THE PROBLEM UP.
           </p>
         </div>
 
-        {/* ── Draggable SYSTEMS Text ── */}
+        {/* ── Draggable SYSTEMS Text — Spring Physics ── */}
         <div className="relative overflow-hidden h-32 mt-4">
           <motion.div
             drag
             dragConstraints={{ left: -300, right: 300, top: -50, bottom: 50 }}
-            dragElastic={0.1}
-            whileDrag={{ scale: 1.05 }}
+            dragElastic={0.08}
+            dragTransition={{
+              bounceStiffness: 300,
+              bounceDamping: 20,
+            }}
+            whileDrag={{ scale: 1.03 }}
+            whileHover={{ opacity: 0.08 }}
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-                       font-clash font-bold text-[15vw] text-white/[0.05]
+                       font-clash font-bold text-[15vw] text-white/[0.04]
                        select-none cursor-grab active:cursor-grabbing whitespace-nowrap
-                       hover:text-white/[0.08] transition-colors duration-300"
+                       transition-opacity duration-300"
             style={{ userSelect: "none" }}
           >
             SYSTEMS
           </motion.div>
         </div>
-
       </div>
     </footer>
   );

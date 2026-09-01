@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import CustomCursor from "@/components/ui/CustomCursor";
+import BlueprintGrid from "@/components/ui/BlueprintGrid";
+import SmoothScrollProvider from "@/lib/smooth-scroll";
 
 /* ===== CLASH DISPLAY — Hero headline + project numbers + footer CTA only ===== */
 const clashDisplay = localFont({
@@ -69,15 +71,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${clashDisplay.variable} ${satoshi.variable} h-full antialiased`}
+      className={`${clashDisplay.variable} ${satoshi.variable} h-full antialiased has-custom-cursor`}
       suppressHydrationWarning
     >
-      <head>
-        <script src="https://cdn.lordicon.com/lordicon.js" async></script>
-      </head>
+      {/* No external CDN scripts — LordIcon removed, using Lucide React */}
       <body className="min-h-full flex flex-col">
-        <CustomCursor />
-        {children}
+        <SmoothScrollProvider>
+          <CustomCursor />
+          <BlueprintGrid />
+          {children}
+        </SmoothScrollProvider>
       </body>
     </html>
   );

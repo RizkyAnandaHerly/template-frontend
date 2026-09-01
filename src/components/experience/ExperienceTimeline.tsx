@@ -5,12 +5,15 @@ import { motion, useInView, useReducedMotion } from "motion/react";
 
 /* ===================================================================
    EXPERIENCE TIMELINE — Section 5 (DARK #09090A)
-   component-map.md layout:
-   - Vertical timeline with glowing connector
-   - Staggered items reveal on scroll
-   - Strict Satoshi & Clash typography, colors match tokens.
-   - Content: content.md → SECTION 5
+   v2 Overhaul:
+   - Section label: "EXPERIENCE" (NO numbered prefix)
+   - Improved connector: animated gradient
+   - Hover highlight per entry
+   - Easing: ease-out-quart
+   - text-wrap: balance on role titles (via globals.css)
    =================================================================== */
+
+const easeOutQuart = [0.25, 1, 0.5, 1] as const;
 
 interface TimelineEntry {
   period: string;
@@ -52,24 +55,23 @@ const ENTRIES: TimelineEntry[] = [
   },
 ];
 
-/* ---- Framer Motion Variants ---- */
 const containerVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.12,
     },
   },
 };
 
 const entryVariants = {
-  hidden: { opacity: 0, x: -20 },
+  hidden: { opacity: 0, x: -16 },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.5,
-      ease: [0.16, 1, 0.3, 1] as const,
+      duration: 0.45,
+      ease: easeOutQuart,
     },
   },
 };
@@ -82,28 +84,31 @@ export default function ExperienceTimeline() {
   return (
     <section id="experience" className="section-dark overflow-hidden">
       <div className="container-portfolio">
-        
-        {/* ── Section Label ── */}
+        {/* ── Section Label — NO numbered prefix ── */}
         <motion.p
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
+          initial={
+            prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }
+          }
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.4, ease: easeOutQuart }}
           className="font-satoshi font-medium text-sm uppercase tracking-[0.08em] mb-16 text-[var(--color-text-muted)]"
         >
-          03 · EXPERIENCE
+          EXPERIENCE
         </motion.p>
 
         {/* ── Vertical Timeline Container ── */}
         <div className="relative max-w-3xl ml-4 md:ml-8 pl-8 md:pl-12">
-          
-          {/* ── Connector Line ── */}
+          {/* ── Connector Line — animated gradient ── */}
           <motion.div
             initial={prefersReducedMotion ? { scaleY: 1 } : { scaleY: 0 }}
             animate={isInView ? { scaleY: 1 } : {}}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
+            transition={{ duration: 1.0, ease: easeOutQuart }}
             className="absolute left-0 top-2 bottom-2 w-px origin-top"
-            style={{ background: "linear-gradient(to bottom, var(--color-accent-primary) 0%, rgba(230,230,230,0.05) 100%)" }}
+            style={{
+              background:
+                "linear-gradient(to bottom, var(--color-accent-primary) 0%, var(--color-accent-primary) 20%, rgba(230,230,230,0.08) 100%)",
+            }}
           />
 
           {/* ── Staggered Entries List ── */}
@@ -118,40 +123,39 @@ export default function ExperienceTimeline() {
               <motion.div
                 key={index}
                 variants={prefersReducedMotion ? {} : entryVariants}
-                className="relative flex flex-col gap-2"
+                className="relative flex flex-col gap-2 group"
               >
-                
-                {/* Custom Pulsing Timeline Node */}
+                {/* Timeline Node — pulsing dot */}
                 <div className="absolute -left-[32px] md:-left-[48px] top-1.5 w-4 h-4 rounded-full bg-[var(--color-bg-dark)] border-2 border-[var(--color-accent-primary)] flex items-center justify-center z-10">
                   <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-primary)] animate-pulse" />
                 </div>
 
+                {/* Hover highlight background */}
+                <div className="absolute -inset-x-4 -inset-y-3 rounded-xl bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
+
                 {/* Date Period */}
-                <span className="font-satoshi font-bold text-xs lg:text-sm uppercase tracking-[0.05em] text-[var(--color-accent-primary)]">
+                <span className="font-satoshi font-bold text-xs lg:text-sm uppercase tracking-[0.05em] text-[var(--color-accent-primary)] relative">
                   {entry.period}
                 </span>
 
                 {/* Role Title */}
-                <h3 className="font-satoshi font-bold text-xl lg:text-2xl text-[var(--color-text-primary)] tracking-[-0.01em]">
+                <h3 className="font-satoshi font-bold text-xl lg:text-2xl text-[var(--color-text-primary)] tracking-[-0.01em] relative">
                   {entry.role}
                 </h3>
 
                 {/* Organization */}
-                <span className="font-satoshi font-medium text-sm text-[var(--color-text-muted)] tracking-wide">
+                <span className="font-satoshi font-medium text-sm text-[var(--color-text-muted)] tracking-wide relative">
                   {entry.org}
                 </span>
 
                 {/* Description */}
-                <p className="font-satoshi font-normal text-sm lg:text-base text-[var(--color-text-subtle)] leading-relaxed mt-1 opacity-90 max-w-2xl">
+                <p className="font-satoshi font-normal text-sm lg:text-base text-[var(--color-text-subtle)] leading-relaxed mt-1 opacity-90 max-w-2xl relative">
                   {entry.desc}
                 </p>
-
               </motion.div>
             ))}
           </motion.div>
-
         </div>
-
       </div>
     </section>
   );

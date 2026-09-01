@@ -14,7 +14,7 @@ export default function Home() {
       {/* Floating interactive mascot */}
       <MascotWalk />
 
-      {/* Floating navbar — fixed position, z-[9999] */}
+      {/* Floating navbar — fixed position, z-50 */}
       <DynamicIsland />
 
       {/* Section 1 — Hero (DARK) */}
@@ -22,30 +22,66 @@ export default function Home() {
         <HeroSection />
       </section>
 
+      {/* Transition: dark → light */}
+      <div
+        className="section-transition-dark-to-light"
+        aria-hidden="true"
+      />
+
       {/* Section 2 — About (LIGHT) */}
       <section data-theme="light" id="about">
         <AboutSection />
       </section>
+
+      {/* Transition: light → dark */}
+      <div
+        className="section-transition-light-to-dark"
+        aria-hidden="true"
+      />
 
       {/* Section 3 — Approach (DARK) */}
       <section data-theme="dark" id="approach">
         <ApproachSection />
       </section>
 
+      {/* Transition: dark → light */}
+      <div
+        className="section-transition-dark-to-light"
+        aria-hidden="true"
+      />
+
       {/* Section 4 — Featured Projects (LIGHT) */}
       <section data-theme="light" id="projects">
         <FeaturedSection />
       </section>
+
+      {/* Transition: light → dark */}
+      <div
+        className="section-transition-light-to-dark"
+        aria-hidden="true"
+      />
 
       {/* Section 5 — Experience (DARK) */}
       <section data-theme="dark" id="experience">
         <ExperienceTimeline />
       </section>
 
+      {/* Transition: dark → light */}
+      <div
+        className="section-transition-dark-to-light"
+        aria-hidden="true"
+      />
+
       {/* Section 6 — Testimonials (LIGHT) */}
       <section data-theme="light" id="testimonials">
         <TestimonialsSection />
       </section>
+
+      {/* Transition: light → dark */}
+      <div
+        className="section-transition-light-to-dark"
+        aria-hidden="true"
+      />
 
       {/* Section 7 — Footer (DARK) */}
       <section data-theme="dark" id="footer">

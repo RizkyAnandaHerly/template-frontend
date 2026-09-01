@@ -7,12 +7,12 @@ import HeroStats from "./HeroStats";
 
 /* ===================================================================
    HERO SECTION — Section 1 (DARK)
-   Redesign v2 — Nazwa-style center photo layout:
-   - Skill ticker rows at top (2 rows, reversed)
-   - Stacked headline left-aligned
-   - Photo CENTER with skill labels flanking L/R (desktop)
-   - Stats bar at bottom
-   Background: #09090A
+   v2 Overhaul:
+   - Photo placeholder redesigned: intentional geometric design (not "broken")
+   - Improved timing: tighter staggers, ease-out-quart
+   - Blueprint grid accent in hero
+   - Edge fade masks on ticker
+   - Radial gradient glow behind headline
    =================================================================== */
 
 /* Skill labels for flanking layout — from content.md SECTION 2B
@@ -30,6 +30,9 @@ const SKILLS_RIGHT = [
   { label: "Product\nStrategy", tag: "SUPPORTING" },
   { label: "Cross-functional\nCollaboration", tag: "SUPPORTING" },
 ];
+
+/* Easing: ease-out-quart */
+const easeOutQuart = [0.25, 1, 0.5, 1] as const;
 
 function SkillLabel({
   label,
@@ -49,10 +52,10 @@ function SkillLabel({
       initial={
         prefersReducedMotion
           ? { opacity: 1 }
-          : { opacity: 0, x: align === "left" ? -20 : 20 }
+          : { opacity: 0, x: align === "left" ? -16 : 16 }
       }
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, duration: 0.5, ease: "easeOut" }}
+      transition={{ delay, duration: 0.4, ease: easeOutQuart }}
       className={`flex flex-col gap-1 ${align === "right" ? "items-end text-right" : "items-start text-left"}`}
     >
       <span className="font-satoshi font-medium text-xs md:text-sm text-white/70 whitespace-pre-line leading-tight">
@@ -67,6 +70,124 @@ function SkillLabel({
       >
         {tag}
       </span>
+    </motion.div>
+  );
+}
+
+/* ---- Photo Placeholder: Intentional geometric design ----
+   Replaces the old dashed-border "Photo coming soon" with an 
+   animated geometric frame that looks designed, not broken. */
+function PhotoPlaceholder() {
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      initial={
+        prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.95 }
+      }
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.4, duration: 0.5, ease: easeOutQuart }}
+      className="flex-shrink-0 relative"
+    >
+      <div
+        className="relative w-[200px] h-[260px] md:w-[240px] md:h-[320px] lg:w-[280px] lg:h-[370px] rounded-2xl overflow-hidden"
+        style={{ background: "var(--color-surface-dark)" }}
+      >
+        {/* Animated border frame — top and left edges */}
+        <motion.div
+          initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.6, duration: 0.8, ease: easeOutQuart }}
+          className="absolute top-0 left-0 right-0 h-px bg-[var(--color-accent-primary)]/30 origin-left"
+        />
+        <motion.div
+          initial={prefersReducedMotion ? { scaleY: 1 } : { scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ delay: 0.7, duration: 0.8, ease: easeOutQuart }}
+          className="absolute top-0 left-0 bottom-0 w-px bg-[var(--color-accent-primary)]/30 origin-top"
+        />
+
+        {/* Animated border frame — bottom and right edges */}
+        <motion.div
+          initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.8, duration: 0.8, ease: easeOutQuart }}
+          className="absolute bottom-0 left-0 right-0 h-px bg-white/10 origin-right"
+        />
+        <motion.div
+          initial={prefersReducedMotion ? { scaleY: 1 } : { scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ delay: 0.9, duration: 0.8, ease: easeOutQuart }}
+          className="absolute top-0 right-0 bottom-0 w-px bg-white/10 origin-bottom"
+        />
+
+        {/* Cross-hair center marker */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          {/* Horizontal line */}
+          <motion.div
+            initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 1.0, duration: 0.5, ease: easeOutQuart }}
+            className="absolute w-12 h-px bg-white/10"
+          />
+          {/* Vertical line */}
+          <motion.div
+            initial={prefersReducedMotion ? { scaleY: 1 } : { scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ delay: 1.0, duration: 0.5, ease: easeOutQuart }}
+            className="absolute w-px h-12 bg-white/10"
+          />
+          {/* Center dot */}
+          <motion.div
+            initial={prefersReducedMotion ? { scale: 1 } : { scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 1.1, duration: 0.3, ease: easeOutQuart }}
+            className="relative w-2 h-2 rounded-full bg-[var(--color-accent-primary)]/40"
+          />
+        </div>
+
+        {/* Blueprint dimension labels */}
+        <motion.div
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.4 }}
+          className="absolute top-3 right-3"
+        >
+          <span
+            className="font-satoshi text-white/10"
+            style={{ fontSize: "8px", letterSpacing: "0.08em" }}
+          >
+            280 × 370
+          </span>
+        </motion.div>
+
+        {/* Bottom label — intentional, not "coming soon" */}
+        <motion.div
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.3, duration: 0.4 }}
+          className="absolute bottom-4 left-0 right-0 text-center"
+        >
+          <span className="font-satoshi font-medium text-[9px] text-white/15 uppercase tracking-[0.2em]">
+            RAH · 2026
+          </span>
+        </motion.div>
+
+        {/* Subtle pulsing glow in center */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          aria-hidden="true"
+        >
+          <div
+            className="w-20 h-20 rounded-full animate-pulse"
+            style={{
+              background:
+                "radial-gradient(circle, var(--color-accent-primary) 0%, transparent 70%)",
+              opacity: 0.03,
+            }}
+          />
+        </div>
+      </div>
     </motion.div>
   );
 }
@@ -89,13 +210,40 @@ export default function HeroSection() {
         }}
       />
 
+      {/* ---- Radial glow behind headline area ---- */}
+      <div
+        className="absolute top-1/4 left-1/4 w-[600px] h-[400px] pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, var(--color-accent-primary) 0%, transparent 70%)",
+          opacity: 0.02,
+          filter: "blur(80px)",
+        }}
+      />
+
       {/* ---- Skill Ticker — top of section (2 rows) ---- */}
       <motion.div
         initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.1, duration: 0.6 }}
-        className="pt-4 md:pt-8 border-b border-[var(--color-border-dark)]"
+        transition={{ delay: 0.05, duration: 0.5 }}
+        className="pt-4 md:pt-8 border-b border-[var(--color-border-dark)] relative"
       >
+        {/* Edge fade masks */}
+        <div
+          className="absolute left-0 top-0 bottom-0 w-16 md:w-24 z-10 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to right, var(--color-bg-dark), transparent)",
+          }}
+        />
+        <div
+          className="absolute right-0 top-0 bottom-0 w-16 md:w-24 z-10 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to left, var(--color-bg-dark), transparent)",
+          }}
+        />
         <SkillTicker />
       </motion.div>
 
@@ -116,60 +264,13 @@ export default function HeroSection() {
                 label={skill.label}
                 tag={skill.tag}
                 align="left"
-                delay={0.8 + i * 0.12}
+                delay={0.5 + i * 0.1}
               />
             ))}
           </div>
 
-          {/* Center — Photo placeholder */}
-          <motion.div
-            initial={
-              prefersReducedMotion
-                ? { opacity: 1 }
-                : { opacity: 0, scale: 0.92 }
-            }
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7, duration: 0.7, ease: "easeOut" }}
-            className="flex-shrink-0"
-          >
-            <div
-              className="w-[200px] h-[260px] md:w-[240px] md:h-[320px] lg:w-[280px] lg:h-[370px] rounded-2xl flex flex-col items-center justify-center gap-3 border relative overflow-hidden"
-              style={{
-                background: "var(--color-surface-dark)",
-                borderColor: "var(--color-border-dark)",
-                borderStyle: "dashed",
-              }}
-            >
-              {/* Subtle corner accents */}
-              <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[var(--color-accent-primary)]/30 rounded-tl-2xl" />
-              <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[var(--color-accent-primary)]/30 rounded-br-2xl" />
-
-              {/* Avatar placeholder icon */}
-              <div
-                className="w-16 h-16 rounded-full flex items-center justify-center"
-                style={{ background: "var(--color-border-dark)" }}
-              >
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                  <circle
-                    cx="12"
-                    cy="8"
-                    r="4"
-                    stroke="var(--color-text-muted)"
-                    strokeWidth="1.5"
-                  />
-                  <path
-                    d="M4 20c0-4 3.6-7 8-7s8 3 8 7"
-                    stroke="var(--color-text-muted)"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-              <p className="font-satoshi font-medium text-xs text-[var(--color-text-muted)] uppercase tracking-widest">
-                Photo coming soon
-              </p>
-            </div>
-          </motion.div>
+          {/* Center — Photo placeholder (intentional geometric design) */}
+          <PhotoPlaceholder />
 
           {/* Right skills — hidden on mobile */}
           <div className="hidden lg:flex flex-col gap-8 lg:gap-10 flex-shrink-0 w-[140px] xl:w-[160px]">
@@ -179,7 +280,7 @@ export default function HeroSection() {
                 label={skill.label}
                 tag={skill.tag}
                 align="right"
-                delay={0.8 + i * 0.12}
+                delay={0.5 + i * 0.1}
               />
             ))}
           </div>

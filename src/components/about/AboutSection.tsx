@@ -6,24 +6,28 @@ import SkillsGrid from "./SkillsGrid";
 
 /* ===================================================================
    ABOUT SECTION — Section 2 (LIGHT #F0F4F8)
-   Redesign v2:
-   - Hook + Punchline + Intro (left)
-   - Working With Me (right)
-   - Philosophy REMOVED (condensed → hero descriptor)
-   - TerminalCard REMOVED (moved → footer easter egg)
-   - Skills grid below
-   Content: content.md → SECTION 2 + 2B
+   v2 Overhaul:
+   - Section label: "ABOUT ME" (NO numbered prefix)
+   - Improved hook typography hierarchy
+   - Easing: ease-out-quart throughout
+   - text-wrap: balance/pretty applied via globals.css
    =================================================================== */
 
-/* ---- Animation variants from design-tokens.md ---- */
+/* Easing: ease-out-quart */
+const easeOutQuart = [0.25, 1, 0.5, 1] as const;
+
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: easeOutQuart },
+  },
 };
 
 const staggerContainer = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
 };
 
 export default function AboutSection() {
@@ -38,17 +42,16 @@ export default function AboutSection() {
   return (
     <section id="about" className="section-light overflow-hidden">
       <div className="container-portfolio">
-
-        {/* ── Section Label ── */}
+        {/* ── Section Label — NO numbered prefix (impeccable rule) ── */}
         <motion.p
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.4, ease: easeOutQuart }}
           className="font-satoshi font-medium text-sm uppercase tracking-[0.08em] mb-16"
           style={{ color: "var(--color-text-dark-muted)" }}
         >
-          01 · ABOUT ME
+          ABOUT ME
         </motion.p>
 
         {/* ── Hook + Working With Me ── */}
@@ -76,7 +79,7 @@ export default function AboutSection() {
               </p>
             </motion.div>
 
-            {/* Punchline */}
+            {/* Punchline — larger, more dramatic */}
             <motion.p
               variants={prefersReducedMotion ? {} : fadeUp}
               className="font-satoshi font-bold"
@@ -154,7 +157,6 @@ export default function AboutSection() {
 
         {/* ── Skills Grid ── */}
         <SkillsGrid />
-
       </div>
     </section>
   );
